@@ -1,0 +1,33 @@
+
+
+.sidebar {
+  width: 220px;
+  background-color: #222;
+  color: white;
+  height: 100vh;
+  padding: 1rem;
+  position: fixed;
+  left: -220px;
+  top: 0;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 1rem 0;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
