@@ -1,6 +1,7 @@
 .appBar {
   background-color: #DDDAD0;
   box-shadow: none;
+  padding: 2 15px;
 }
 
 .title {
@@ -18,11 +19,11 @@
 .menuIcon:hover,
 .accountIcon:hover {
   transform: scale(1.1);
-  color: #00bcd4;
+  color: #57564F;
   cursor: pointer;
 }
 
 .accountIcon {
-  size: 50px;
+
   color: inherit;
 }
