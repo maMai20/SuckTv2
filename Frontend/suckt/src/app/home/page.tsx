@@ -1,11 +1,10 @@
-import React from 'react'
+import MenuAppBar from '../components/MenuAppBar';
 
-function Home() {
+export default function Home() {
   return (
     <div>
-      
+      <MenuAppBar />
+      <p>เนื้อหาอื่นๆ ของหน้า Home</p>
     </div>
-  )
+  );
 }
-
-export default Home

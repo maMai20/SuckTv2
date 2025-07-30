@@ -1,0 +1,28 @@
+.appBar {
+  background-color: #DDDAD0;
+  box-shadow: none;
+}
+
+.title {
+  flex-grow: 1;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.menuIcon {
+  margin-right: 30px;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+.menuIcon:hover,
+.accountIcon:hover {
+  transform: scale(1.1);
+  color: #00bcd4;
+  cursor: pointer;
+}
+
+.accountIcon {
+  size: 50px;
+  color: inherit;
+}
