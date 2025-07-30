@@ -34,7 +34,7 @@ export default function LoginPage() {
 
       if ((response as { success: boolean }).success) {
         alert('เข้าสู่ระบบสำเร็จ!');
-        router.push('/Home'); // เปลี่ยนเส้นทางไปยังหน้า Dashboard หรือหน้าอื่นที่ต้องการ
+        router.push('/home'); // เปลี่ยนเส้นทางไปยังหน้า Dashboard หรือหน้าอื่นที่ต้องการ
       }
     } catch (err: any) {
       setError(err.message || 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
@@ -112,10 +112,13 @@ export default function LoginPage() {
             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#005bb5')}
             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#0070f3')}
           >
-            เข้าสู่ระบบ
+            Log in
+         
+
           </button>
 
-           <div style={{
+          {/* เพิ่มปุ่ม สมัครสมาชิก + ลืมรหัสผ่าน */}
+          <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             marginTop: '15px'
@@ -133,7 +136,7 @@ export default function LoginPage() {
                 padding: 0
               }}
             >
-              สมัครสมาชิก
+              Apply for membership
             </button>
 
             <button
@@ -149,7 +152,7 @@ export default function LoginPage() {
                 padding: 0
               }}
             >
-              ลืมรหัสผ่าน?
+              Forgot your password?
             </button>
           </div>
         </form>
