@@ -1,8 +1,7 @@
 'use client'; // Client Component directive
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // สำหรับ App Router
-
+import { useRouter } from 'next/navigation';
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -25,7 +24,7 @@ export default function LoginPage() {
 
       const response = await new Promise((resolve, reject) => {
         setTimeout(() => {
-          if (email === 'user@example.com' && password === 'password123') {
+          if (email === 'xxx' && password === 'xxx') {
             resolve({ success: true, message: 'เข้าสู่ระบบสำเร็จ!' });
           } else {
             reject(new Error('อีเมลหรือรหัสผ่านไม่ถูกต้อง'));
@@ -58,12 +57,12 @@ export default function LoginPage() {
         width: '400px',
         maxWidth: '90%'
       }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#222' }}>เข้าสู่ระบบ</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#333' }}>Login</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '20px' }}>
-            <label htmlFor="email" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>อีเมล:</label>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>Username:</label>
             <input
-              type="email"
+              type="text"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -74,12 +73,12 @@ export default function LoginPage() {
                 border: '1px solid #ddd',
                 borderRadius: '5px',
                 fontSize: '16px',
-                color: '#333' // <<-- เพิ่มบรรทัดนี้: ทำให้ตัวอักษรที่พิมพ์เข้มขึ้น
+                color: '#333' 
               }}
             />
           </div>
           <div style={{ marginBottom: '30px' }}>
-            <label htmlFor="password" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>รหัสผ่าน:</label>
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#333' }}>password:</label>
             <input
               type="password"
               id="password"
@@ -115,6 +114,44 @@ export default function LoginPage() {
           >
             เข้าสู่ระบบ
           </button>
+
+           <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '15px'
+          }}>
+            <button
+              type="button"
+              onClick={() => router.push('/Register')}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#147bf0ff',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                fontSize: '14px',
+                padding: 0
+              }}
+            >
+              สมัครสมาชิก
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push('/ForgotPassword')}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#147bf0ff',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                fontSize: '14px',
+                padding: 0
+              }}
+            >
+              ลืมรหัสผ่าน?
+            </button>
+          </div>
         </form>
       </div>
     </div>
