@@ -21,6 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+
 import Drawer from '@mui/material/Drawer';
 
 
@@ -49,7 +50,7 @@ const DrawerContent = ({ onClose }: { onClose: () => void }) => (
         <ListItem key={text} disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon className={styles.iconPrimary} /> : <MailIcon className={styles.iconSecondary} />}
+              
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItemButton>
@@ -62,7 +63,7 @@ const DrawerContent = ({ onClose }: { onClose: () => void }) => (
         <ListItem key={text} disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon className={styles.iconPrimary} /> : <MailIcon className={styles.iconSecondary} />}
+              
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItemButton>
@@ -136,14 +137,13 @@ export default function ModernAppBarDrawer() {
 
   return (
     <>
-      {/* vvv แก้ไขส่วนนี้ vvv */}
+
       <AppBar 
         position="sticky" 
-        className={styles.appBarCustom} /* 1. เพิ่ม className ที่นี่ */
+        className={styles.appBarCustom} 
         elevation={4}
-        /* 2. ลบ color="primary" ออกไป */
       >
-      {/* ^^^ แก้ไขส่วนนี้ ^^^ */}
+
         <Toolbar>
           <IconButton
             edge="start"
