@@ -1,0 +1,44 @@
+/* --- CSS Variables สำหรับปรับแต่งสีได้ง่าย --- */
+:root {
+  --icon-primary-color: #1976d2;
+  --icon-secondary-color: #9c27b0;
+}
+
+
+.appBarCustom {
+  background-color: #000000 !important; /* คุณสามารถเปลี่ยนสีตรงนี้ได้เลย */
+}
+/* ^^^ เพิ่มส่วนนี้เข้ามา ^^^ */
+
+.menuButton {
+  margin-right: 16px !important;
+}
+
+.title {
+  flex-grow: 1 !important;
+  font-weight: bold !important;
+}
+
+/* --- Styles for Profile Menu --- */
+.menuPaper {
+  margin-top: 8px !important;
+}
+
+/* --- Styles for Drawer --- */
+.drawerContainer {
+  width: 280px;
+}
+
+.drawerTitle {
+  margin: 16px 0 !important;
+  padding: 0 16px !important;
+}
+
+/* --- Styles for Icons --- */
+.iconPrimary {
+  color: var(--icon-primary-color);
+}
+
+.iconSecondary {
+  color: var(--icon-secondary-color);
+}
