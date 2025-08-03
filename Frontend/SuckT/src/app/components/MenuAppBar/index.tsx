@@ -23,9 +23,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import Drawer from '@mui/material/Drawer';
-
-
-import styles from './style.module.css'; 
+import styles from '../../styles/ka.module.css';
 
 // --- Data ---
 const menuItemsPrimary = ['Calendar', 'To do List', 'Timer', 'Chat'];

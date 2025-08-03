@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-body {
- font-family: "Inter", sans-serif;
-}
 
+
+* {
+  font-family: 'Kanit', sans-serif;
+  box-sizing: border-box;
+}

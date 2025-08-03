@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Kanit', sans-serif;
+  background-color: black;
+}
+
+.container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+}
+
+.title {
+  position: absolute;
+  top: 1rem;
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 2;
+  text-shadow: 1px 1px 4px black;
+}
+
+.gifWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.gif {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: brightness(0.9);
+}
+
+.overlayControls {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.controlButton {
+  background-color: #ffffff20;
+  border: 2px solid white;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.controlButton:hover {
+  background-color: #ffffff40;
+}
+
+.slider {
+  width: 200px;
+  height: 5px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px #00e5ff;
+}
+
+.audio {
+  display: none;
+}

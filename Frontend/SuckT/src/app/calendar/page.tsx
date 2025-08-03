@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import './Calendar.css';
+
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(dayjs());
