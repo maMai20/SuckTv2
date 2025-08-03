@@ -45,7 +45,7 @@ export default function RegisterPage() {
         width: '400px',
         maxWidth: '90%'
       }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>สมัครสมาชิก</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>Apply for membership</h2>
         <form onSubmit={handleRegister}>
           <label style={{ fontWeight: 'bold' }}>username</label>
           <input
@@ -97,11 +97,11 @@ export default function RegisterPage() {
             fontSize: '16px',
             cursor: 'pointer'
           }}>
-            สมัครสมาชิก
+            Apply for membership
           </button>
         </form>
         <div style={{ marginTop: '16px', textAlign: 'center' }}>
-          <a href="/Login" style={{ color: '#0070f3' }}>กลับไปเข้าสู่ระบบ</a>
+          <a href="/Login" style={{ color: '#0070f3' }}>Return to login</a>
         </div>
       </div>
     </div>
