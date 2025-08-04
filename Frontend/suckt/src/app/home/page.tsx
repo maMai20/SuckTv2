@@ -2,33 +2,46 @@
 
 import MenuAppBar from '../components/MenuAppBar';
 import { useState, useRef, useEffect } from 'react';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
+import VolumeDown from '@mui/icons-material/VolumeDown';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import ImageIcon from '@mui/icons-material/Image';
 import styles from '../styles/Home.module.css';
 
 const songs = [
   { src: '/good-night-lofi.mp3', title: 'Good Night Lofi' },
-  { src: '/rainy-lofi-city-lofi.mp3', title: 'rainy lofi city lofi' },
-  { src: '/lofi-background-music.mp3', title: 'lofi background' },
-  { src: '/lofi-chill.mp3', title: 'lofi chill' },
-  { src: '/lofi-lofi-song.mp3', title: 'lofi lofi' },
+  { src: '/rainy-lofi-city-lofi.mp3', title: 'Rainy Lofi City' },
+  { src: '/lofi-background-music.mp3', title: 'Lofi Background' },
+  { src: '/lofi-chill.mp3', title: 'Lofi Chill' },
+  { src: '/lofi-lofi-song.mp3', title: 'Lofi Lofi' },
+];
+
+const gifs = [
+  '/animating.gif',
+  '/lofi-girl.gif',
+  '/lofi-rain.gif',
+  '/sunset-lofi.gif',
 ];
 
 export default function Home() {
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [currentGifIndex, setCurrentGifIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const togglePlayPause = () => {
     if (!audioRef.current) return;
-
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch((e) => console.warn('ไม่สามารถเล่นเพลงได้:', e));
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(console.warn);
     }
   };
 
@@ -38,11 +51,24 @@ export default function Home() {
     setIsPlaying(true);
   };
 
-  const changeVolume = (delta: number) => {
-    let newVolume = Math.min(1, Math.max(0, volume + delta));
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
+  const goToPreviousSong = () => {
+    const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    setCurrentSongIndex(prevIndex);
+    setIsPlaying(true);
+  };
+
+  const changeGif = () => {
+    const nextGif = (currentGifIndex + 1) % gifs.length;
+    setCurrentGifIndex(nextGif);
+  };
+
+  const handleVolumeChange = (_: Event, newValue: number | number[]) => {
+    if (typeof newValue === 'number') {
+      const newVol = newValue / 100;
+      setVolume(newVol);
+      if (audioRef.current) {
+        audioRef.current.volume = newVol;
+      }
     }
   };
 
@@ -51,9 +77,7 @@ export default function Home() {
       audioRef.current.src = songs[currentSongIndex].src;
       audioRef.current.volume = volume;
       if (isPlaying) {
-        audioRef.current
-          .play()
-          .catch((e) => console.warn('ไม่สามารถเล่นเพลงได้:', e));
+        audioRef.current.play().catch(console.warn);
       }
     }
   }, [currentSongIndex]);
@@ -69,41 +93,47 @@ export default function Home() {
       <MenuAppBar />
       <div className={styles.container}>
         <div className={styles.card}>
-          <h1 className={styles.title}>🎵 ฟังเพลงพร้อม GIF</h1>
-
-          <img src="/animating.gif" alt="animating.gif" className={styles.gif} />
-
-          <p className={styles.songTitle}>
-            🎶 กำลังเล่น: {songs[currentSongIndex].title}
-          </p>
+          <img src={gifs[currentGifIndex]} alt="lofi gif" className={styles.gif} />
 
           <div className={styles.controls}>
-            <button onClick={togglePlayPause} className={styles.controlButton}>
-              {isPlaying ? '⏸ หยุด' : '▶️ เล่น'}
+            <button onClick={goToPreviousSong} className={styles.iconButton}>
+              <SkipPreviousIcon fontSize="large" />
             </button>
-            <button onClick={changeSong} className={styles.controlButton}>
-              🔁 เปลี่ยนเพลง
-            </button>
-            <button
-              onClick={() => changeVolume(-0.1)}
-              className={styles.controlButton}
-            >
-              🔉 ลดเสียง
-            </button>
-            <button
-              onClick={() => changeVolume(0.1)}
-              className={styles.controlButton}
-            >
-              🔊 เพิ่มเสียง
-            </button>
-          </div>
 
-          <audio
-            ref={audioRef}
-            src={songs[currentSongIndex].src}
-            loop
-            className={styles.audio}
-          />
+            <button onClick={togglePlayPause} className={styles.controlButton}>
+              {isPlaying ? '⏸' : '▶'}
+            </button>
+
+            <button onClick={changeSong} className={styles.iconButton}>
+              <SkipNextIcon fontSize="large" />
+            </button>
+
+            <button onClick={changeGif} className={styles.iconButton}>
+              <ImageIcon fontSize="large" />
+            </button>
+
+            <Box sx={{ width: 200, mt: 1 }}>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <VolumeDown />
+                <Slider
+                  aria-label="Volume"
+                  value={volume * 100}
+                  onChange={handleVolumeChange}
+                  sx={{
+                    color: `hsl(${volume * 120}, 100%, 50%)`,
+                  }}
+                />
+                <VolumeUp />
+              </Stack>
+            </Box>
+
+            <audio
+              ref={audioRef}
+              src={songs[currentSongIndex].src}
+              loop
+              className={styles.audio}
+            />
+          </div>
         </div>
       </div>
     </>

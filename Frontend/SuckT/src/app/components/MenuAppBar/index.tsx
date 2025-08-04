@@ -17,22 +17,37 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import Drawer from '@mui/material/Drawer';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import TimerIcon from '@mui/icons-material/Timer';
+import ChatIcon from '@mui/icons-material/Chat';
+
 import styles from '../../styles/ka.module.css';
 
 // --- Data ---
-const menuItemsPrimary = ['Calendar', 'To do List', 'Timer', 'Chat'];
-const menuItemsSecondary = ['Logout'];
+const menuItemsPrimary = [
+  { text: 'Calendar', icon: <CalendarMonthIcon /> },
+  { text: 'To do List', icon: <ListAltIcon /> },
+  { text: 'Timer', icon: <TimerIcon /> },
+  { text: 'Chat', icon: <ChatIcon /> },
+];
+
+const menuItemsSecondary = [
+  { text: 'Logout', icon: <LogoutIcon /> },
+];
 
 // --- Sub-components ---
 
 // Component สำหรับแสดงรายการเมนูใน Drawer
-const DrawerContent = ({ onClose }: { onClose: () => void }) => (
+const DrawerContent = ({
+  onClose,
+}: {
+  onClose: (event: React.KeyboardEvent | React.MouseEvent) => void;
+}) => (
   <Box
     className={styles.drawerContainer}
     role="presentation"
@@ -44,26 +59,22 @@ const DrawerContent = ({ onClose }: { onClose: () => void }) => (
     </Typography>
     <Divider />
     <List>
-      {menuItemsPrimary.map((text, index) => (
-        <ListItem key={text} disablePadding>
+      {menuItemsPrimary.map((item) => (
+        <ListItem key={item.text} disablePadding>
           <ListItemButton>
-            <ListItemIcon>
-              
-            </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
           </ListItemButton>
         </ListItem>
       ))}
     </List>
     <Divider />
     <List>
-      {menuItemsSecondary.map((text, index) => (
-        <ListItem key={text} disablePadding>
+      {menuItemsSecondary.map((item) => (
+        <ListItem key={item.text} disablePadding>
           <ListItemButton>
-            <ListItemIcon>
-              
-            </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
           </ListItemButton>
         </ListItem>
       ))}
@@ -109,39 +120,37 @@ const ProfileMenu = () => {
         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         <Divider />
-        <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
       </Menu>
     </>
   );
 };
-
 
 // --- Main Component ---
 export default function ModernAppBarDrawer() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const auth = true; // สามารถเปลี่ยนเป็น state หรือ prop ได้
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+      setDrawerOpen(open);
+    };
 
   return (
     <>
-
-      <AppBar 
-        position="sticky" 
-        className={styles.appBarCustom} 
+      <AppBar
+        position="sticky"
+        className={styles.appBarCustom}
         elevation={4}
       >
-
         <Toolbar>
           <IconButton
             edge="start"

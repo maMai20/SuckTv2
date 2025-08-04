@@ -4,91 +4,81 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  max-width: 3000px;
   font-family: 'Kanit', sans-serif;
   background-color: black;
 }
 
 .container {
-  position: relative;
+  display: flex;
+  align-items: center;
   height: 100vh;
-  overflow: hidden;
-  color: white;
+  background: #111;
+  flex-direction: column;
+}
+
+.card {
+  width: 100%;
   text-align: center;
-}
-
-.title {
-  position: absolute;
-  top: 1rem;
-  width: 100%;
-  font-size: 1.5rem;
-  font-weight: bold;
-  z-index: 2;
-  text-shadow: 1px 1px 4px black;
-}
-
-.gifWrapper {
-  width: 100%;
-  height: 100%;
   position: relative;
 }
 
+/* GIF ครึ่งจอแนวตั้ง */
 .gif {
-  object-fit: cover;
   width: 100%;
-  height: 100%;
-  display: block;
-  filter: brightness(0.9);
+  height: 60vh;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
-.overlayControls {
+/* controls ซ้อนบน gif */
+.controls {
   position: absolute;
-  bottom: 2rem;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
   display: flex;
-  flex-direction: column;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0 25px;
+  border-radius: 50px;
   align-items: center;
-  gap: 1rem;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  backdrop-filter: blur(10px);
+  justify-content: center;
+  user-select: none;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
-.controlButton {
-  background-color: #ffffff20;
-  border: 2px solid white;
+/* ปุ่ม icon และปุ่ม control ใช้สไตล์เดียวกัน */
+.controlButton,
+.iconButton {
+  background: none;
+  border: none;
   color: white;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 10px;
+  font-size: 1.6rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
 }
 
-.controlButton:hover {
-  background-color: #ffffff40;
+/* Hover effect เปลี่ยนสี (สีเขียว) และขยายเล็กน้อย */
+.controlButton:hover,
+.iconButton:hover {
+  color: #d692cd; /* สีเขียว Spotify */
+  transform: scale(1.3);
 }
 
-.slider {
-  width: 200px;
-  height: 5px;
-  appearance: none;
-  background: #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: 0.2s;
-}
-
-.slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 5px #00e5ff;
+/* ชื่อเพลง */
+.songTitle {
+  color: white;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  user-select: none;
 }
 
 .audio {
