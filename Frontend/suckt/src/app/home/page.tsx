@@ -30,6 +30,8 @@ const gifs = [
   '/4ztyctxuhka61.gif',
   '/uwwte8wps4h91.gif',
   '/room.gif',
+  '/ou.gif',
+  '/214384.gif',
 ];
 
 export default function Home() {

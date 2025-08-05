@@ -1,39 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
 
-
-
-/* --- CSS Variables สำหรับปรับแต่งสีได้ง่าย --- */
-:root {
+/* --- CSS Variables --- */
+body[data-theme='light'] {
+  --appbar-bg: #ffffff;
+  --drawer-bg: #ffffff;
+  --text-color: #000000;
   --icon-primary-color: #000000;
-  --icon-secondary-color: #000000;
+  --icon-secondary-color: #444444;
+  --bg-body: #ffffff;
 }
 
-.appBarCustom {
-  background-color: #000000 !important; 
-  padding: 0 5px;
+body[data-theme='dark'] {
+  --appbar-bg: #121212;
+  --drawer-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --icon-primary-color: #ffffff;
+  --icon-secondary-color: #cccccc;
+  --bg-body: #121212;
 }
-/* ^^^ เพิ่มส่วนนี้เข้ามา ^^^ */
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-color);
+  font-family: 'Kanit', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Navbar --- */
+.appBarCustom {
+  background-color: var(--appbar-bg) !important;
+  padding: 0 5px;
+  transition: background-color 0.3s ease;
+}
 
 .menuButton {
   margin-right: 25px !important;
 }
-
 
 .title {
   flex-grow: 1 !important;
   font-weight: bold !important;
 }
 
-
-/* --- Styles for Profile Menu --- */
-.menuPaper {
-  margin-top: 8px !important;
-}
-
-
-/* --- Styles for Drawer --- */
+/* --- Drawer --- */
 .drawerContainer {
   width: 250px;
+  background-color: var(--drawer-bg);
+  height: 100%;
+  color: var(--text-color);
 }
 
 .drawerTitle {
@@ -41,8 +57,7 @@
   padding: 0 16px !important;
 }
 
-
-/* --- Styles for Icons --- */
+/* --- Icons --- */
 .iconPrimary {
   color: var(--icon-primary-color);
 }
@@ -50,3 +65,7 @@
   color: var(--icon-secondary-color);
 }
 
+/* --- Profile Menu --- */
+.menuPaper {
+  margin-top: 8px !important;
+}

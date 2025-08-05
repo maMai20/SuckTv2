@@ -16,16 +16,22 @@ import {
   Menu,
   MenuItem,
   Box,
+  CssBaseline,
 } from '@mui/material';
 
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import TimerIcon from '@mui/icons-material/Timer';
-import ChatIcon from '@mui/icons-material/Chat';
+import {
+  Menu as MenuIcon,
+  AccountCircle,
+  Logout as LogoutIcon,
+  CalendarMonth as CalendarMonthIcon,
+  ListAlt as ListAltIcon,
+  Timer as TimerIcon,
+  Chat as ChatIcon,
+  Brightness4 as DarkIcon,
+  Brightness7 as LightIcon,
+} from '@mui/icons-material';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import styles from '../../styles/ka.module.css';
 
 // --- Data ---
@@ -36,13 +42,9 @@ const menuItemsPrimary = [
   { text: 'Chat', icon: <ChatIcon /> },
 ];
 
-const menuItemsSecondary = [
-  { text: 'Logout', icon: <LogoutIcon /> },
-];
+const menuItemsSecondary = [{ text: 'Logout', icon: <LogoutIcon /> }];
 
 // --- Sub-components ---
-
-// Component สำหรับแสดงรายการเมนูใน Drawer
 const DrawerContent = ({
   onClose,
 }: {
@@ -82,8 +84,14 @@ const DrawerContent = ({
   </Box>
 );
 
-// Component สำหรับเมนูโปรไฟล์
-const ProfileMenu = () => {
+// --- Profile Menu Component ---
+const ProfileMenu = ({
+  onToggleTheme,
+  currentMode,
+}: {
+  onToggleTheme: () => void;
+  currentMode: 'light' | 'dark';
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -120,6 +128,24 @@ const ProfileMenu = () => {
         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         <Divider />
+        <MenuItem
+          onClick={() => {
+            onToggleTheme();
+            handleMenuClose();
+          }}
+        >
+          {currentMode === 'dark' ? (
+            <>
+              <LightIcon fontSize="small" style={{ marginRight: 8 }} />
+              Light Mode
+            </>
+          ) : (
+            <>
+              <DarkIcon fontSize="small" style={{ marginRight: 8 }} />
+              Dark Mode
+            </>
+          )}
+        </MenuItem>
         <MenuItem onClick={handleMenuClose}>Login</MenuItem>
       </Menu>
     </>
@@ -129,7 +155,33 @@ const ProfileMenu = () => {
 // --- Main Component ---
 export default function ModernAppBarDrawer() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const auth = true; // สามารถเปลี่ยนเป็น state หรือ prop ได้
+  const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
+
+  // อ่านค่าจาก localStorage (จำค่าธีมที่เลือกไว้)
+  React.useEffect(() => {
+    const saved = localStorage.getItem('themeMode');
+    if (saved === 'light' || saved === 'dark') {
+      setMode(saved);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem('themeMode', mode);
+  }, [mode]);
+
+  const toggleTheme = () => {
+    setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: mode,
+        },
+      }),
+    [mode]
+  );
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -145,7 +197,8 @@ export default function ModernAppBarDrawer() {
     };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <AppBar
         position="sticky"
         className={styles.appBarCustom}
@@ -167,7 +220,7 @@ export default function ModernAppBarDrawer() {
             SuckT
           </Typography>
 
-          {auth && <ProfileMenu />}
+          <ProfileMenu onToggleTheme={toggleTheme} currentMode={mode} />
         </Toolbar>
       </AppBar>
 
@@ -179,6 +232,6 @@ export default function ModernAppBarDrawer() {
       >
         <DrawerContent onClose={toggleDrawer(false)} />
       </SwipeableDrawer>
-    </>
+    </ThemeProvider>
   );
 }
