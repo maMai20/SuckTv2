@@ -11,6 +11,10 @@ import VolumeUp from '@mui/icons-material/VolumeUp';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import ImageIcon from '@mui/icons-material/Image';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import TimerIcon from '@mui/icons-material/Timer';
+import ChatIcon from '@mui/icons-material/Chat';
 import styles from '../styles/Home.module.css';
 
 const songs = [
@@ -92,8 +96,12 @@ export default function Home() {
     <>
       <MenuAppBar />
       <div className={styles.container}>
-        <div className={styles.card}>
-          <img src={gifs[currentGifIndex]} alt="lofi gif" className={styles.gif} />
+        <div className={styles.gifContainer}>
+          <img
+            src={gifs[currentGifIndex]}
+            alt="lofi gif"
+            className={styles.gif}
+          />
 
           <div className={styles.controls}>
             <button onClick={goToPreviousSong} className={styles.iconButton}>
@@ -119,22 +127,27 @@ export default function Home() {
                   aria-label="Volume"
                   value={volume * 100}
                   onChange={handleVolumeChange}
-                  sx={{
-                    color: `hsl(${volume * 120}, 100%, 50%)`,
-                  }}
+                  sx={{ color: `hsl(${volume * 120}, 100%, 50%)` }}
                 />
                 <VolumeUp />
               </Stack>
             </Box>
-
-            <audio
-              ref={audioRef}
-              src={songs[currentSongIndex].src}
-              loop
-              className={styles.audio}
-            />
           </div>
         </div>
+
+        <div className={styles.bottomButtons}>
+          <button className={styles.featureBlock}><CalendarMonthIcon fontSize="large" /><span>Calendar</span></button>
+          <button className={styles.featureBlock}><ChecklistIcon fontSize="large" /><span>Todo List</span></button>
+          <button className={styles.featureBlock}><TimerIcon fontSize="large" /><span>Timer</span></button>
+          <button className={styles.featureBlock}><ChatIcon fontSize="large" /><span>Chat</span></button>
+        </div>
+
+        <audio
+          ref={audioRef}
+          src={songs[currentSongIndex].src}
+          loop
+          className={styles.audio}
+        />
       </div>
     </>
   );
