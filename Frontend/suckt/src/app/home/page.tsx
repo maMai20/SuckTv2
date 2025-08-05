@@ -26,10 +26,10 @@ const songs = [
 ];
 
 const gifs = [
-  '/animating.gif',
-  '/lofi-girl.gif',
-  '/lofi-rain.gif',
-  '/sunset-lofi.gif',
+  '/rain.gif',
+  '/4ztyctxuhka61.gif',
+  '/uwwte8wps4h91.gif',
+  '/room.gif',
 ];
 
 export default function Home() {

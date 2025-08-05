@@ -6,6 +6,7 @@ body, html {
   height: 100%;
   font-family: 'Kanit', sans-serif;
   background-color: #000;
+  overflow-y: hidden;
 }
 
 .container {
@@ -17,13 +18,14 @@ body, html {
   width: 100%;
   background: #111;
   overflow-x: hidden;
+
 }
 
 /* GIF container เต็มจอแนวนอน, ครึ่งจอแนวตั้ง */
 .gifContainer {
   position: relative;
   width: 100vw;
-  height: 60vh;
+  height: 73vh;
   overflow: hidden;
   border-radius: 0;
   margin: 0;
@@ -48,7 +50,6 @@ body, html {
   border-radius: 50px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
   z-index: 2;
 }
 
@@ -69,7 +70,6 @@ body, html {
 
 .controlButton:hover,
 .iconButton:hover {
-  color: #d692cd;
   transform: scale(1.2);
 }
 
@@ -93,7 +93,7 @@ body, html {
   padding: 0 2rem;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 1200px;
+  max-width: 2500px;
 }
 
 .featureBlock {
