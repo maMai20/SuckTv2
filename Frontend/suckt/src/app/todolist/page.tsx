@@ -1,7 +1,8 @@
 'use client'; // บอกว่าไฟล์นี้ทำงานฝั่ง Client (ต้องใช้เพราะมีการใช้ useState)
 
-import { useState } from "react";
-import "../globals.css"; // import CSS
+import { useState, useEffect } from "react";
+import '../styles/Todolist.css'
+
 
 // ประเภทข้อมูล Task
 type Task = {
