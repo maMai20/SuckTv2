@@ -86,7 +86,7 @@ body, html {
 /* ปุ่มฟีเจอร์ 4 อัน */
 .bottomButtons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
   margin-top: 2rem;
