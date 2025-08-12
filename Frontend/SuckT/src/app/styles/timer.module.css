@@ -1,72 +1,64 @@
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
-  background: linear-gradient(135deg, #1e1e2f, #252542);
-  color: white;
+  background: #fce4ec;
 }
 
-.timerDisplay {
-  font-size: 5rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
+.left {
+  flex: 1;
+  padding: 20px;
+  background: #fff0f6;
+  overflow-y: auto;
 }
 
-.controls {
+.right {
+  flex: 1;
   display: flex;
-  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
-button {
-  padding: 0.8rem 1.5rem;
-  border: none;
+.addAlarm input {
+  margin: 5px;
+  padding: 5px;
+}
+
+.alarmCard {
+  background: #ffe6f0;
   border-radius: 8px;
-  font-size: 1.2rem;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.alarmTime {
+  font-size: 1.5rem;
+}
+
+.timerBox {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.petArea {
+  margin: 10px 0;
+}
+
+.petImg {
+  width: 150px;
+}
+
+.timeText {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.buttonRow button {
+  margin: 5px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #f8bbd0;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btnStart {
-  background-color: #4caf50;
-  color: white;
-}
-.btnStart:hover {
-  background-color: #45a049;
-}
-
-.btnPause {
-  background-color: #ff9800;
-  color: white;
-}
-.btnPause:hover {
-  background-color: #e68a00;
-}
-
-.btnReset {
-  background-color: #f44336;
-  color: white;
-}
-.btnReset:hover {
-  background-color: #da190b;
-}
-
-.btnFullscreen {
-  background-color: #2196f3;
-  color: white;
-}
-.btnFullscreen:hover {
-  background-color: #0b7dda;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .timerDisplay {
-    font-size: 3rem;
-  }
-  button {
-    font-size: 1rem;
-    padding: 0.6rem 1rem;
-  }
 }
