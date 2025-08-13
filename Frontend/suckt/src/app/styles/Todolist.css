@@ -11,18 +11,32 @@ body {
   padding: 20px;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content:  flex-start;
   align-items: flex-start;
 }
 
 .container {
-  max-width: 480px;
+  max-width: 700px;
   width: 100%;
-  background: #fff;
+  background: #fdfdfd;
   padding: 30px 25px;
   border-radius: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease;
+  margin-right: 40px;
+  min-height: 90vh;
+}
+
+.container {
+  max-width: 700px;
+  width: 100%;
+  background: #fdfdfd;
+  padding: 30px 90px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease;
+  margin-right: 40px;
+  min-height: 90vh;
 }
 
 .container:hover {
