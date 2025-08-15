@@ -10,7 +10,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // ป้องกันการรีโหลดหน้าเมื่อ submit form
-
+    
     setError(null); // เคลียร์ข้อผิดพลาดเดิม
 
     // ตรวจสอบความถูกต้องของข้อมูลเบื้องต้น (ตัวอย่างง่ายๆ)
