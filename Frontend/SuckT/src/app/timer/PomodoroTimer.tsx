@@ -2,65 +2,46 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/timer.module.css';
 
-const PET_STAGES = ['/pets/cat1.png', '/pets/cat2.png', '/pets/cat3.png'];
-
-export default function PomodoroTimer() {
-  const [timeLeft, setTimeLeft] = useState(25 * 60); // 25 นาที
+export default function StopwatchTimer() {
+  const [time, setTime] = useState(0); // เริ่มที่ 0
   const [running, setRunning] = useState(false);
-  const [stage, setStage] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const [totalTime, setTotalTime] = useState(0);
 
   useEffect(() => {
     if (running) {
       intervalRef.current = setInterval(() => {
-        setTimeLeft(t => {
-          if (t <= 1) {
-            clearInterval(intervalRef.current!);
-            setRunning(false);
-            return 0;
-          }
-          return t - 1;
-        });
-        setTotalTime(tt => tt + 1);
+        setTime(t => t + 1);
       }, 1000);
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
     }
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [running]);
 
-  useEffect(() => {
-    if (totalTime >= 60 && totalTime < 180) setStage(1);
-    if (totalTime >= 180) setStage(2);
-  }, [totalTime]);
-
   const start = () => setRunning(true);
-  const stop = () => setRunning(false);
-  const breakTime = () => {
-    setTimeLeft(5 * 60);
-    setRunning(true);
+  const pause = () => setRunning(false);
+  const reset = () => {
+    setRunning(false);
+    setTime(0);
   };
+  const addMinute = () => setTime(t => t + 60);
 
   const format = (sec: number) => {
-    const m = Math.floor(sec / 60);
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
     const s = sec % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    return `${h.toString().padStart(2, '0')}:${m
+      .toString()
+      .padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
   return (
     <div className={styles.timerBox}>
-      <h3>Pomodoro</h3>
-      <div className={styles.petArea}>
-        <img src={PET_STAGES[stage]} alt="pet" className={styles.petImg} />
-      </div>
-      <div className={styles.timeText}>{format(timeLeft)}</div>
+      <div className={styles.timeText}>{format(time)}</div>
       <div className={styles.buttonRow}>
-        <button onClick={start}>start</button>
-        <button onClick={breakTime}>break</button>
-        <button onClick={stop}>stop</button>
+        <button onClick={start} className={styles.startBtn}>▶ Start</button>
+        <button onClick={pause} className={styles.pauseBtn}>⏸ Pause</button>
+        <button onClick={reset} className={styles.resetBtn}>⏹ Reset</button>
       </div>
     </div>
   );

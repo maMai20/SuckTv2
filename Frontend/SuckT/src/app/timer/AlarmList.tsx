@@ -1,61 +1,133 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/timer.module.css';
 
-interface Alarm {
+interface Timer {
   id: number;
-  time: string;
+  minutes: number;
+  secondsLeft: number;
   label: string;
+  running: boolean;
   enabled: boolean;
 }
 
-export default function AlarmList() {
-  const [alarms, setAlarms] = useState<Alarm[]>([]);
-  const [time, setTime] = useState('');
+export default function TimerList() {
+  const [timers, setTimers] = useState<Timer[]>([]);
+  const [minutes, setMinutes] = useState(5);
   const [label, setLabel] = useState('');
 
-  const addAlarm = () => {
-    if (!time) return alert('ใส่เวลาปลุกก่อน');
-    setAlarms([...alarms, { id: Date.now(), time, label, enabled: true }]);
-    setTime('');
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimers(prev =>
+        prev.map(t =>
+          t.running && t.secondsLeft > 0
+            ? { ...t, secondsLeft: t.secondsLeft - 1 }
+            : t
+        )
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const addTimer = () => {
+    if (minutes <= 0) return alert('กรุณาใส่เวลา');
+    const newTimer: Timer = {
+      id: Date.now(),
+      minutes,
+      secondsLeft: minutes * 60,
+      label,
+      running: false,
+      enabled: true,
+    };
+    setTimers([...timers, newTimer]);
+    setMinutes(5);
     setLabel('');
   };
 
-  const toggleAlarm = (id: number) => {
-    setAlarms(alarms.map(a => a.id === id ? { ...a, enabled: !a.enabled } : a));
+  const toggleTimer = (id: number) => {
+    setTimers(prev =>
+      prev.map(t =>
+        t.id === id ? { ...t, running: !t.running } : t
+      )
+    );
   };
 
-  const deleteAlarm = (id: number) => {
-    setAlarms(alarms.filter(a => a.id !== id));
+  const toggleEnable = (id: number) => {
+    setTimers(prev =>
+      prev.map(t =>
+        t.id === id ? { ...t, enabled: !t.enabled } : t
+      )
+    );
+  };
+
+  const resetTimer = (id: number) => {
+    setTimers(prev =>
+      prev.map(t =>
+        t.id === id
+          ? { ...t, secondsLeft: t.minutes * 60, running: false }
+          : t
+      )
+    );
+  };
+
+  const deleteTimer = (id: number) =>
+    setTimers(prev => prev.filter(t => t.id !== id));
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = (secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   return (
-    <div>
-      <h2>นาฬิกาปลุก</h2>
-      <div className={styles.addAlarm}>
-        <input type="time" value={time} onChange={e => setTime(e.target.value)} />
-        <input 
-          type="text" 
-          placeholder="ข้อความ" 
-          value={label} 
-          onChange={e => setLabel(e.target.value)} 
+    <div className={styles.timerBox}>
+      {/* Add Form */}
+      <div className={styles.addTimer}>
+        <input
+          type="number"
+          min="1"
+          max="300"
+          value={minutes}
+          onChange={e => setMinutes(Number(e.target.value))}
+          className={styles.inputNumber}
         />
-        <button onClick={addAlarm}>เพิ่ม</button>
+        <input
+          type="text"
+          placeholder="ใส่ชื่อ เช่น ทำอาหาร"
+          value={label}
+          onChange={e => setLabel(e.target.value)}
+          className={styles.inputText}
+        />
+        <button onClick={addTimer} className={styles.addBtn}>＋ เพิ่ม</button>
       </div>
 
-      <div>
-        {alarms.map(alarm => (
-          <div key={alarm.id} className={styles.alarmCard}>
-            <div className={styles.alarmTime}>{alarm.time}</div>
-            <div className={styles.alarmLabel}>{alarm.label}</div>
-            <label>
-              <input 
-                type="checkbox" 
-                checked={alarm.enabled} 
-                onChange={() => toggleAlarm(alarm.id)} 
-              /> เปิด
-            </label>
-            <button onClick={() => deleteAlarm(alarm.id)}>ลบ</button>
+      {/* Timer Cards */}
+      <div className={styles.timerList}>
+        {timers.length === 0 && (
+          <p className={styles.empty}>ยังไม่มีตัวจับเวลา</p>
+        )}
+        {timers.map(timer => (
+          <div key={timer.id} className={styles.timerCard}>
+            <div className={styles.timerInfo}>
+              <div className={styles.timerTime}>{formatTime(timer.secondsLeft)}</div>
+              <div className={styles.timerLabel}>{timer.label || 'ไม่มีข้อความ'}</div>
+            </div>
+            <div className={styles.timerActions}>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  checked={timer.enabled}
+                  onChange={() => toggleEnable(timer.id)}
+                />
+                <span className={styles.slider}></span>
+              </label>
+              <button onClick={() => toggleTimer(timer.id)} className={styles.playBtn}>
+                {timer.running ? '⏸' : '▶'}
+              </button>
+              <button onClick={() => resetTimer(timer.id)} className={styles.resetBtn}>↺</button>
+              <button onClick={() => deleteTimer(timer.id)} className={styles.deleteBtn}>✕</button>
+            </div>
           </div>
         ))}
       </div>

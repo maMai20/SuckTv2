@@ -1,64 +1,225 @@
+/* Layout */
 .container {
   display: flex;
   height: 100vh;
-  background: #fce4ec;
+  background: #fff5fa; /* โทนชมพูอ่อน */
+  color: #333;
+  font-family: 'Prompt', sans-serif;
 }
 
-.left {
+.left, .right {
   flex: 1;
-  padding: 20px;
-  background: #fff0f6;
+  padding: 2rem;
   overflow-y: auto;
 }
 
-.right {
-  flex: 1;
+.sectionTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ff69b4;
+}
+
+/* Alarm */
+.alarmBox {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.addAlarm {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
 }
 
 .addAlarm input {
-  margin: 5px;
-  padding: 5px;
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.btn {
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.addBtn { background: #ff91c2; color: #fff; }
+.addBtn:hover { background: #ff6aa5; }
+
+.alarmList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .alarmCard {
-  background: #ffe6f0;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 8px;
+  background: #fff0f6;
+  padding: 1rem 1.2rem;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .alarmTime {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff4fa0;
 }
 
+.alarmLabel {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.alarmActions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.deleteBtn {
+  background: #f44336;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.empty {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Stopwatch Timer */
 .timerBox {
   background: #fff;
-  border-radius: 12px;
-  padding: 20px;
+  padding: 2rem;
+  border-radius: 1rem;
   text-align: center;
-}
-
-.petArea {
-  margin: 10px 0;
-}
-
-.petImg {
-  width: 150px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .timeText {
-  font-size: 2rem;
-  margin: 10px 0;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #ff4fa0;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .buttonRow button {
-  margin: 5px;
-  padding: 8px 16px;
+  padding: 0.8rem 1.4rem;
   border-radius: 12px;
   border: none;
-  background: #f8bbd0;
+  font-size: 1rem;
   cursor: pointer;
+  transition: 0.2s;
+  font-weight: 600;
+}
+
+.startBtn { background: #4cd964; color: white; }
+.pauseBtn { background: #f39c12; color: white; }
+.resetBtn { background: #e74c3c; color: white; }
+.timerAddBtn { background: #3498db; color: white; }
+
+.buttonRow button:hover {
+  opacity: 0.85;
+}
+
+/* Timer action buttons (play/reset/delete) */
+.timerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.playBtn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.resetBtnTimer {
+  background-color: #ff9800;
+  color: white;
+}
+
+.deleteBtnTimer {
+  background-color: #f44336;
+  color: white;
+}
+
+.playBtn, .resetBtnTimer, .deleteBtnTimer {
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: 600;
 }
