@@ -1,225 +1,126 @@
-/* Layout */
+/* Container หลัก */
 .container {
   display: flex;
   height: 100vh;
-  background: #fff5fa; /* โทนชมพูอ่อน */
-  color: #333;
-  font-family: 'Prompt', sans-serif;
+  background: #121212;
+  color: #fff;
+  font-family: 'Kanit', sans-serif;
+  transition: all 0.3s ease;
 }
 
-.left, .right {
+/* ฝั่งซ้าย สำหรับตั้งค่า */
+.left {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
-}
-
-.sectionTitle {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #ff69b4;
-}
-
-/* Alarm */
-.alarmBox {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.addAlarm {
-  display: flex;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
-
-.addAlarm input {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 0.95rem;
-}
-
-.btn {
-  padding: 0.6rem 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.addBtn { background: #ff91c2; color: #fff; }
-.addBtn:hover { background: #ff6aa5; }
-
-.alarmList {
+  border-right: 1px solid #2c2c2c;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.5rem;
 }
 
-.alarmCard {
-  background: #fff0f6;
-  padding: 1rem 1.2rem;
-  border-radius: 14px;
+/* ฝั่งขวา สำหรับแสดงเวลา */
+.right {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  gap: 1.5rem;
 }
 
-.alarmTime {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #ff4fa0;
-}
-
-.alarmLabel {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.alarmActions {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.deleteBtn {
-  background: #f44336;
-  color: white;
-  border: none;
-  font-size: 1rem;
-  padding: 0.4rem 0.6rem;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.empty {
-  text-align: center;
-  color: #aaa;
-  font-style: italic;
-}
-
-/* Toggle Switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-  margin-right: 0.5rem;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
+/* Fullscreen Mode */
+.fullscreen {
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  border-radius: 20px;
-  transition: 0.4s;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: all 0.3s ease;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
+/* Fullscreen background image */
+.fullscreen.bgImage {
+  background: url('/images/bg-timer.jpg') no-repeat center center/cover;
 }
 
-input:checked + .slider {
-  background-color: #4caf50;
-}
+/* Fullscreen background colors */
+.fullscreen.red { background: #ff3b30; }
+.fullscreen.blue { background: #007aff; }
 
-input:checked + .slider:before {
-  transform: translateX(20px);
-}
-
-/* Stopwatch Timer */
-.timerBox {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
+/* เวลา */
 .timeText {
   font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: #ff4fa0;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.6);
+  transition: font-size 0.3s ease, color 0.3s ease;
 }
 
+/* ขยายเวลาตอน fullscreen */
+.fullscreen .timeText {
+  font-size: 5rem;
+  text-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* ปุ่มต่าง ๆ */
 .buttonRow {
   display: flex;
-  gap: 0.8rem;
-  justify-content: center;
+  gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-.buttonRow button {
-  padding: 0.8rem 1.4rem;
-  border-radius: 12px;
+.startBtn, .resetBtn, .fullscreenBtn {
+  padding: 0.6rem 1.4rem;
+  font-size: 1.1rem;
   border: none;
-  font-size: 1rem;
+  border-radius: 12px;
   cursor: pointer;
-  transition: 0.2s;
-  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.startBtn { background: #4cd964; color: white; }
-.pauseBtn { background: #f39c12; color: white; }
-.resetBtn { background: #e74c3c; color: white; }
-.timerAddBtn { background: #3498db; color: white; }
+.startBtn { background-color: #4caf50; color: #fff; }
+.resetBtn { background-color: #f44336; color: #fff; }
+.fullscreenBtn { background-color: #2196f3; color: #fff; }
 
-.buttonRow button:hover {
-  opacity: 0.85;
+.startBtn:hover, .resetBtn:hover, .fullscreenBtn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
-/* Timer action buttons (play/reset/delete) */
-.timerActions {
+/* Input number */
+.numberInput, .labelInput {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: #1e1e1e;
+  color: #fff;
+  text-align: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.numberInput:focus, .labelInput:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 0 8px rgba(33,150,243,0.4);
+}
+
+/* จัดระยะห่างระหว่าง input กับ label */
+.inputGroup {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.playBtn {
-  background-color: #4caf50;
-  color: white;
-}
-
-.resetBtnTimer {
-  background-color: #ff9800;
-  color: white;
-}
-
-.deleteBtnTimer {
-  background-color: #f44336;
-  color: white;
-}
-
-.playBtn, .resetBtnTimer, .deleteBtnTimer {
-  padding: 0.4rem 0.6rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  font-weight: 600;
+  gap: 0.8rem;
 }
