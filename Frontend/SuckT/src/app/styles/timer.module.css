@@ -8,10 +8,10 @@
   transition: all 0.3s ease;
 }
 
-/* ฝั่งซ้าย สำหรับตั้งค่า */
+/* ฝั่งซ้าย Custom Timer */
 .left {
   flex: 1;
-  padding: 2rem;
+  padding: 1.5rem;
   overflow-y: auto;
   border-right: 1px solid #2c2c2c;
   display: flex;
@@ -19,7 +19,7 @@
   gap: 1.5rem;
 }
 
-/* ฝั่งขวา สำหรับแสดงเวลา */
+/* ฝั่งขวา Stopwatch */
 .right {
   flex: 1;
   display: flex;
@@ -27,11 +27,11 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  transition: all 0.3s ease;
   gap: 1.5rem;
+  transition: all 0.3s ease;
 }
 
-/* Fullscreen Mode */
+/* ---------- Fullscreen Mode ---------- */
 .fullscreen {
   position: fixed;
   top: 0;
@@ -47,16 +47,15 @@
   transition: all 0.3s ease;
 }
 
-/* Fullscreen background image */
+/* เปลี่ยนพื้นหลังตอน Fullscreen */
 .fullscreen.bgImage {
   background: url('/images/bg-timer.jpg') no-repeat center center/cover;
 }
 
-/* Fullscreen background colors */
 .fullscreen.red { background: #ff3b30; }
 .fullscreen.blue { background: #007aff; }
 
-/* เวลา */
+/* เวลาหลัก */
 .timeText {
   font-size: 3rem;
   font-weight: 700;
@@ -67,13 +66,13 @@
   transition: font-size 0.3s ease, color 0.3s ease;
 }
 
-/* ขยายเวลาตอน fullscreen */
+/* เวลาเมื่อ fullscreen */
 .fullscreen .timeText {
   font-size: 5rem;
   text-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
-/* ปุ่มต่าง ๆ */
+/* ---------- ปุ่มหลัก ---------- */
 .buttonRow {
   display: flex;
   gap: 1rem;
@@ -100,16 +99,54 @@
   opacity: 0.9;
 }
 
-/* Input number */
+/* ---------- Custom Timer Section ---------- */
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffcc70;
+}
+
+/* ปุ่ม Add Timer */
+.addBtn {
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+.addBtn:hover { color: #8ac7e9; }
+
+/* กล่อง Timer */
+.timerList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.timerItem {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+/* Input */
 .numberInput, .labelInput {
   padding: 0.5rem 0.7rem;
   border: 1px solid #444;
   border-radius: 8px;
-  background: #1e1e1e;
+  background: #2a2a2a;
   color: #fff;
+  font-size: 1rem;
   text-align: center;
   transition: all 0.2s ease;
-  font-size: 1rem;
 }
 
 .numberInput:focus, .labelInput:focus {
@@ -118,9 +155,48 @@
   box-shadow: 0 0 8px rgba(33,150,243,0.4);
 }
 
-/* จัดระยะห่างระหว่าง input กับ label */
 .inputGroup {
   display: flex;
   align-items: center;
   gap: 0.8rem;
+}
+
+/* เวลาในกล่อง Timer */
+.timerItem .timeText {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  margin: 0.3rem 0;
+}
+
+/* ปุ่ม Action ใน Timer */
+.timerActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.playBtn, .resetBtn, .deleteBtn {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.7rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.playBtn { background: #b5ead7; color: #000; }
+.playBtn:hover { background: #9ed9c6; }
+
+.resetBtn { background: #ffdac1; color: #000; }
+.resetBtn:hover { background: #f9caa5; }
+
+.deleteBtn { background: #ffb7b2; color: #000; }
+.deleteBtn:hover { background: #f39a95; }
+
+/* ---------- ซ่อนซ้ายเวลา Fullscreen ---------- */
+.hideLeft .left {
+  display: none;
 }
