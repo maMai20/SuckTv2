@@ -3,7 +3,8 @@ import React, { useMemo, useRef, useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin, { DateSelectArg, EventClickArg } from '@fullcalendar/interaction';
+import interactionPlugin from '@fullcalendar/interaction';
+import { DateSelectArg, EventClickArg } from '@fullcalendar/core';
 
 // ---------- Types ----------
 interface CalEvent {
@@ -15,9 +16,6 @@ interface CalEvent {
 }
 
 // ---------- Utils ----------
-function toISO(date: Date) {
-  return date.toISOString();
-}
 function isSameDay(a: Date, b: Date) {
   return (
     a.getFullYear() === b.getFullYear() &&
@@ -58,9 +56,7 @@ const MiniMonth: React.FC<{
   onChange: (d: Date) => void;
 }> = ({ value, onChange }) => {
   const [anchor, setAnchor] = useState(() => new Date(value));
-  useEffect(() => {
-    setAnchor(new Date(value));
-  }, [value]);
+  useEffect(() => setAnchor(new Date(value)), [value]);
 
   const matrix = useMemo(() => generateMonthMatrix(anchor), [anchor]);
   const month = anchor.toLocaleString([], { month: 'long' });
@@ -69,11 +65,13 @@ const MiniMonth: React.FC<{
   return (
     <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-3 shadow-sm">
       <div className="flex items-center justify-between mb-2">
-        <button className="px-2 py-1 rounded-xl border border-neutral-700 hover:bg-neutral-800" onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}>
+        <button className="px-2 py-1 rounded-xl border border-neutral-700 hover:bg-neutral-800"
+          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}>
           ◀
         </button>
         <div className="text-sm font-medium select-none">{month} {year}</div>
-        <button className="px-2 py-1 rounded-xl border border-neutral-700 hover:bg-neutral-800" onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}>
+        <button className="px-2 py-1 rounded-xl border border-neutral-700 hover:bg-neutral-800"
+          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}>
           ▶
         </button>
       </div>
@@ -110,12 +108,6 @@ export default function CalendarDashboard() {
   const [events, setEvents] = useState<CalEvent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const calRef = useRef<FullCalendar | null>(null);
-
-  const [now, setNow] = useState<Date>(new Date());
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(t);
-  }, []);
 
   const dayEvents = useMemo(() => {
     return events
@@ -156,15 +148,6 @@ export default function CalendarDashboard() {
     setEvents(prev => prev.map(e => (e.id === id ? { ...e, completed: !e.completed } : e)));
   };
 
-  const updateTitle = (id: string, title: string) => {
-    setEvents(prev => prev.map(e => (e.id === id ? { ...e, title } : e)));
-  };
-
-  const moveToSelected = () => {
-    const api = calRef.current?.getApi();
-    if (api) api.gotoDate(selectedDate);
-  };
-
   const fullCalEvents = useMemo(() => {
     return events.map(e => ({
       id: e.id,
@@ -177,68 +160,42 @@ export default function CalendarDashboard() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 p-4 md:p-6">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[380px,1fr] gap-4">
-        <div className="space-y-4">
-          <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-4 shadow-sm">
-            <div className="text-xs uppercase tracking-wide text-neutral-400">เวลาปัจจุบัน</div>
-            <div className="mt-1 text-3xl font-semibold">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
-            <div className="text-sm text-neutral-400">{fmtDate(now)}</div>
-          </div>
-
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
+        
+        {/* ฝั่งซ้าย */}
+        <div className="flex flex-col gap-4">
           <MiniMonth value={selectedDate} onChange={setSelectedDate} />
 
-          <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <div className="text-xs uppercase tracking-wide text-neutral-400">กิจกรรมในวัน</div>
-                <div className="text-lg font-medium">{fmtDate(selectedDate)}</div>
-              </div>
-              <button onClick={moveToSelected} className="px-3 py-1.5 rounded-xl border border-neutral-700 hover:bg-neutral-800 text-sm">ไปยังวันนี้ในปฏิทิน</button>
+          <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-4 flex-1">
+            <div className="mb-3">
+              <div className="text-xs uppercase tracking-wide text-neutral-400">กิจกรรมในวัน</div>
+              <div className="text-lg font-medium">{fmtDate(selectedDate)}</div>
             </div>
             {dayEvents.length === 0 ? (
               <div className="text-sm text-neutral-400">ยังไม่มีกิจกรรมในวันนี้</div>
             ) : (
-              <div className="overflow-hidden rounded-xl border border-neutral-800">
-                <table className="w-full text-sm">
-                  <thead className="bg-neutral-900/60">
-                    <tr>
-                      <th className="text-left p-2 border-b border-neutral-800">ทำ</th>
-                      <th className="text-left p-2 border-b border-neutral-800">เวลา</th>
-                      <th className="text-left p-2 border-b border-neutral-800">กิจกรรม</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dayEvents
-                      .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
-                      .map((e) => (
-                        <tr key={e.id} className="hover:bg-neutral-900/50">
-                          <td className="p-2 align-top">
-                            <input
-                              type="checkbox"
-                              checked={!!e.completed}
-                              onChange={() => toggleComplete(e.id)}
-                              className="size-4 accent-neutral-500"
-                            />
-                          </td>
-                          <td className="p-2 align-top whitespace-nowrap text-neutral-300">
-                            {fmtTime(e.startDate)}{e.endDate ? ` – ${fmtTime(e.endDate)}` : ''}
-                          </td>
-                          <td className="p-2">
-                            <input
-                              className={`w-full bg-transparent outline-none ${e.completed ? 'line-through opacity-60' : ''}`}
-                              defaultValue={e.title}
-                              onBlur={(ev) => updateTitle(e.id, ev.currentTarget.value)}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
+              <ul className="space-y-2">
+                {dayEvents
+                  .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
+                  .map(e => (
+                    <li key={e.id} className="flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={!!e.completed}
+                        onChange={() => toggleComplete(e.id)}
+                        className="size-4 accent-neutral-500"
+                      />
+                      <span className={`${e.completed ? 'line-through opacity-60' : ''}`}>
+                        {fmtTime(e.startDate)} {e.endDate ? `– ${fmtTime(e.endDate)}` : ''} | {e.title}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
             )}
           </div>
         </div>
 
+        {/* ฝั่งขวา */}
         <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-3 md:p-4 shadow-sm">
           <FullCalendar
             ref={calRef as any}
@@ -257,9 +214,7 @@ export default function CalendarDashboard() {
             select={onSelect}
             events={fullCalEvents}
             eventClick={onEventClick}
-            datesSet={(arg) => {
-              setSelectedDate(arg.start);
-            }}
+            datesSet={(arg) => setSelectedDate(arg.start)}
             height="calc(100vh - 120px)"
           />
         </div>

@@ -1,0 +1,134 @@
+/* Layout หลัก */
+.calendar-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100vh;
+  background: #0f0f0f;
+  color: #fff;
+  font-family: 'Kanit', sans-serif;
+}
+
+/* Sidebar (ซ้าย) */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  border-right: 1px solid #222;
+  background: #121212;
+  overflow-y: auto;
+}
+
+/* Mini Calendar */
+.mini-month {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  border-radius: 1rem;
+  padding: 0.8rem;
+}
+
+.mini-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.mini-header button {
+  background: none;
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  color: #ccc;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+.mini-header button:hover {
+  background: #2a2a2a;
+}
+
+.mini-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 0.7rem;
+  color: #888;
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.mini-cell {
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  border: 1px solid #333;
+  background: transparent;
+  color: #ddd;
+  cursor: pointer;
+}
+.mini-cell:hover {
+  background: #2a2a2a;
+}
+.mini-cell.active {
+  background: #3a3a3a;
+  border: 1px solid #666;
+}
+.mini-cell.out-month {
+  color: #555;
+}
+
+/* Short Note */
+.short-note {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  border-radius: 1rem;
+  padding: 0.8rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.short-header {
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.short-date {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #ddd;
+}
+.short-empty {
+  font-size: 0.8rem;
+  color: #777;
+}
+.short-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.short-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+.short-item input {
+  width: 14px;
+  height: 14px;
+}
+.short-item .done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Main Calendar (ขวา) */
+.main-calendar {
+  padding: 1rem;
+  background: #181818;
+}
+.fc-completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
