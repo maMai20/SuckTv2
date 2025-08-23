@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { DateSelectArg, EventClickArg } from '@fullcalendar/core';
+import styles from '../styles/calendar.module.css';
 
 // ---------- Types ----------
 interface CalEvent {
@@ -63,24 +64,28 @@ const MiniMonth: React.FC<{
   const year = anchor.getFullYear();
 
   return (
-    <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-3 shadow-sm">
-      <div className="flex items-center justify-between mb-2">
-        <button className="px-2 py-1 rounded-xl border border-neutral-700 hover:bg-neutral-800"
-          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}>
+    <div className={styles.miniMonth}>
+      <div className={styles.miniMonthHeader}>
+        <button
+          className={styles.navBtn}
+          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}
+        >
           ◀
         </button>
-        <div className="text-sm font-medium select-none">{month} {year}</div>
-        <button className="px-2 py-1 rounded-xl border border-neutral-700 hover:bg-neutral-800"
-          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}>
+        <div className={styles.monthLabel}>{month} {year}</div>
+        <button
+          className={styles.navBtn}
+          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}
+        >
           ▶
         </button>
       </div>
-      <div className="grid grid-cols-7 gap-1 text-center text-xs text-neutral-400 mb-1">
+      <div className={styles.weekDays}>
         {['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => (
           <div key={d}>{d}</div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-1">
+      <div className={styles.datesGrid}>
         {matrix.flat().map((d, i) => {
           const inMonth = d.getMonth() === anchor.getMonth();
           const active = isSameDay(d, value);
@@ -89,9 +94,9 @@ const MiniMonth: React.FC<{
               key={i}
               onClick={() => onChange(new Date(d))}
               className={[
-                'aspect-square rounded-xl text-xs flex items-center justify-center border',
-                inMonth ? 'text-neutral-200 border-neutral-800' : 'text-neutral-500 border-neutral-900',
-                active ? 'bg-neutral-800 border-neutral-600 ring-2 ring-neutral-500' : 'hover:bg-neutral-800'
+                styles.dateCell,
+                inMonth ? styles.inMonth : styles.outMonth,
+                active ? styles.activeDate : ''
               ].join(' ')}
             >
               {d.getDate()}
@@ -154,70 +159,64 @@ export default function CalendarDashboard() {
       title: e.completed ? `✔ ${e.title}` : e.title,
       start: e.start,
       end: e.end,
-      classNames: e.completed ? ['opacity-60', 'line-through'] : [],
+      classNames: e.completed ? [styles.completedEvent] : [],
     }));
   }, [events]);
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 p-4 md:p-6">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
-        
-        {/* ฝั่งซ้าย */}
-        <div className="flex flex-col gap-4">
-          <MiniMonth value={selectedDate} onChange={setSelectedDate} />
+    <div className={styles.container}>
+      <div className={styles.leftPane}>
+        <MiniMonth value={selectedDate} onChange={setSelectedDate} />
 
-          <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-4 flex-1">
-            <div className="mb-3">
-              <div className="text-xs uppercase tracking-wide text-neutral-400">กิจกรรมในวัน</div>
-              <div className="text-lg font-medium">{fmtDate(selectedDate)}</div>
-            </div>
-            {dayEvents.length === 0 ? (
-              <div className="text-sm text-neutral-400">ยังไม่มีกิจกรรมในวันนี้</div>
-            ) : (
-              <ul className="space-y-2">
-                {dayEvents
-                  .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
-                  .map(e => (
-                    <li key={e.id} className="flex items-center gap-2 text-sm">
-                      <input
-                        type="checkbox"
-                        checked={!!e.completed}
-                        onChange={() => toggleComplete(e.id)}
-                        className="size-4 accent-neutral-500"
-                      />
-                      <span className={`${e.completed ? 'line-through opacity-60' : ''}`}>
-                        {fmtTime(e.startDate)} {e.endDate ? `– ${fmtTime(e.endDate)}` : ''} | {e.title}
-                      </span>
-                    </li>
-                  ))}
-              </ul>
-            )}
+        <div className={styles.dayEvents}>
+          <div className={styles.dayHeader}>
+            <div className={styles.dayTitle}>กิจกรรมในวัน</div>
+            <div className={styles.dayDate}>{fmtDate(selectedDate)}</div>
           </div>
+          {dayEvents.length === 0 ? (
+            <div className={styles.noEvents}>ยังไม่มีกิจกรรมในวันนี้</div>
+          ) : (
+            <ul className={styles.eventList}>
+              {dayEvents
+                .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
+                .map(e => (
+                  <li key={e.id} className={styles.eventItem}>
+                    <input
+                      type="checkbox"
+                      checked={!!e.completed}
+                      onChange={() => toggleComplete(e.id)}
+                    />
+                    <span className={e.completed ? styles.eventDone : ''}>
+                      {fmtTime(e.startDate)} {e.endDate ? `– ${fmtTime(e.endDate)}` : ''} | {e.title}
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          )}
         </div>
+      </div>
 
-        {/* ฝั่งขวา */}
-        <div className="rounded-2xl bg-neutral-900/70 border border-neutral-800 p-3 md:p-4 shadow-sm">
-          <FullCalendar
-            ref={calRef as any}
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay',
-            }}
-            initialView="timeGridWeek"
-            slotMinTime="06:00:00"
-            slotMaxTime="22:00:00"
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            select={onSelect}
-            events={fullCalEvents}
-            eventClick={onEventClick}
-            datesSet={(arg) => setSelectedDate(arg.start)}
-            height="calc(100vh - 120px)"
-          />
-        </div>
+      <div className={styles.rightPane}>
+        <FullCalendar
+          ref={calRef as any}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          }}
+          initialView="timeGridWeek"
+          slotMinTime="06:00:00"
+          slotMaxTime="22:00:00"
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          select={onSelect}
+          events={fullCalEvents}
+          eventClick={onEventClick}
+          datesSet={(arg) => setSelectedDate(arg.start)}
+          height="calc(100vh - 100px)"
+        />
       </div>
     </div>
   );

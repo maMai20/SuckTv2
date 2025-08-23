@@ -1,134 +1,125 @@
-/* Layout หลัก */
-.calendar-container {
-  display: grid;
-  grid-template-columns: 320px 1fr;
+.container {
+  display: flex;
   height: 100vh;
-  background: #0f0f0f;
-  color: #fff;
-  font-family: 'Kanit', sans-serif;
+  background: #fff;
+  color: #202124;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Sidebar (ซ้าย) */
-.sidebar {
+.leftPane {
+  width: 300px;
+  border-right: 1px solid #dadce0;
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  gap: 1rem;
-  border-right: 1px solid #222;
-  background: #121212;
   overflow-y: auto;
 }
 
-/* Mini Calendar */
-.mini-month {
-  background: #1b1b1b;
-  border: 1px solid #333;
-  border-radius: 1rem;
-  padding: 0.8rem;
+.rightPane {
+  flex: 1;
+  padding: 0.5rem;
 }
 
-.mini-header {
+/* Mini Calendar */
+.miniMonth {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: #fff;
+}
+.miniMonthHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  align-items: center;
+  margin-bottom: .5rem;
 }
-.mini-header button {
+.navBtn {
+  border: none;
   background: none;
-  border: 1px solid #444;
-  border-radius: 0.5rem;
-  color: #ccc;
-  padding: 0.2rem 0.5rem;
   cursor: pointer;
+  font-size: 14px;
+  color: #5f6368;
 }
-.mini-header button:hover {
-  background: #2a2a2a;
+.monthLabel {
+  font-size: 14px;
+  font-weight: 500;
 }
-
-.mini-days {
+.weekDays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  font-size: 0.7rem;
-  color: #888;
+  font-size: 11px;
+  color: #5f6368;
+  margin-bottom: 2px;
   text-align: center;
-  margin-bottom: 0.3rem;
 }
-
-.mini-grid {
+.datesGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;
 }
-.mini-cell {
-  aspect-ratio: 1;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  border: 1px solid #333;
-  background: transparent;
-  color: #ddd;
+.dateCell {
+  aspect-ratio: 1 / 1;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
   cursor: pointer;
 }
-.mini-cell:hover {
-  background: #2a2a2a;
+.dateCell:hover {
+  background: #f1f3f4;
 }
-.mini-cell.active {
-  background: #3a3a3a;
-  border: 1px solid #666;
+.inMonth {
+  color: #202124;
 }
-.mini-cell.out-month {
-  color: #555;
+.outMonth {
+  color: #9aa0a6;
 }
-
-/* Short Note */
-.short-note {
-  background: #1b1b1b;
-  border: 1px solid #333;
-  border-radius: 1rem;
-  padding: 0.8rem;
-  flex: 1;
-  overflow-y: auto;
+.activeDate {
+  background: #1a73e8;
+  color: #fff;
 }
 
-.short-header {
-  font-size: 0.85rem;
+/* Daily Events */
+.dayEvents {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: #fff;
+}
+.dayHeader {
   margin-bottom: 0.5rem;
 }
-.short-date {
-  font-weight: bold;
-  font-size: 1rem;
-  color: #ddd;
+.dayTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #5f6368;
 }
-.short-empty {
-  font-size: 0.8rem;
-  color: #777;
+.dayDate {
+  font-size: 14px;
+  font-weight: 500;
 }
-.short-list {
+.noEvents {
+  font-size: 13px;
+  color: #5f6368;
+}
+.eventList {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
-.short-item {
+.eventItem {
+  font-size: 13px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  margin-bottom: 0.4rem;
+  gap: 6px;
 }
-.short-item input {
-  width: 14px;
-  height: 14px;
-}
-.short-item .done {
+.eventDone {
   text-decoration: line-through;
-  opacity: 0.6;
+  color: #9aa0a6;
 }
 
-/* Main Calendar (ขวา) */
-.main-calendar {
-  padding: 1rem;
-  background: #181818;
-}
-.fc-completed {
+/* Completed Event in Calendar */
+.completedEvent {
   opacity: 0.6;
   text-decoration: line-through;
 }
