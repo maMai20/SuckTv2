@@ -1,202 +1,125 @@
-/* Container หลัก */
+:root {
+  --blue: #ffc0d5;
+  --green: #a9eeff;
+  --purple: #9c27b0;
+  --pink: #e91e63;
+  --card-bg: #fff;
+  --shadow: rgba(0,0,0,0.15);
+}
+
 .container {
   display: flex;
   height: 100vh;
-  background: #121212;
-  color: #fff;
-  font-family: 'Kanit', sans-serif;
-  transition: all 0.3s ease;
+  background: #f4f6fa;
 }
-
-/* ฝั่งซ้าย Custom Timer */
 .left {
-  flex: 1;
-  padding: 1.5rem;
-  overflow-y: auto;
-  border-right: 1px solid #2c2c2c;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* ฝั่งขวา Stopwatch */
-.right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  gap: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-/* ---------- Fullscreen Mode ---------- */
-.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  transition: all 0.3s ease;
-}
-
-/* เปลี่ยนพื้นหลังตอน Fullscreen */
-.fullscreen.bgImage {
-  background: url('/images/bg-timer.jpg') no-repeat center center/cover;
-}
-
-.fullscreen.red { background: #ff3b30; }
-.fullscreen.blue { background: #007aff; }
-
-/* เวลาหลัก */
-.timeText {
-  font-size: 3rem;
-  font-weight: 700;
-  text-align: center;
-  color: #fff;
-  letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(0,0,0,0.6);
-  transition: font-size 0.3s ease, color 0.3s ease;
-}
-
-/* เวลาเมื่อ fullscreen */
-.fullscreen .timeText {
-  font-size: 5rem;
-  text-shadow: 0 0 20px rgba(0,0,0,0.8);
-}
-
-/* ---------- ปุ่มหลัก ---------- */
-.buttonRow {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.startBtn, .resetBtn, .fullscreenBtn {
-  padding: 0.6rem 1.4rem;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.startBtn { background-color: #4caf50; color: #fff; }
-.resetBtn { background-color: #f44336; color: #fff; }
-.fullscreenBtn { background-color: #2196f3; color: #fff; }
-
-.startBtn:hover, .resetBtn:hover, .fullscreenBtn:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-/* ---------- Custom Timer Section ---------- */
-.sectionTitle {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #ffcc70;
-}
-
-/* ปุ่ม Add Timer */
-.addBtn {
-  border: none;
-  padding: 0.6rem 1rem;
-  border-radius: 1rem;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: 0.2s;
-  margin-bottom: 1rem;
-  color: #ffffff;
-  font-weight: 500;
-}
-.addBtn:hover { color: #8ac7e9; }
-
-/* กล่อง Timer */
-.timerList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.timerItem {
-  background: #1e1e1e;
+  width: 35%;
   padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
+  border-right: 1px solid #ddd;
 }
-
-/* Input */
-.numberInput, .labelInput {
-  padding: 0.5rem 0.7rem;
-  border: 1px solid #444;
-  border-radius: 8px;
-  background: #2a2a2a;
-  color: #fff;
-  font-size: 1rem;
-  text-align: center;
-  transition: all 0.2s ease;
-}
-
-.numberInput:focus, .labelInput:focus {
-  border-color: #2196f3;
-  outline: none;
-  box-shadow: 0 0 8px rgba(33,150,243,0.4);
-}
-
-.inputGroup {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-/* เวลาในกล่อง Timer */
-.timerItem .timeText {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-  margin: 0.3rem 0;
-}
-
-/* ปุ่ม Action ใน Timer */
-.timerActions {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.playBtn, .resetBtn, .deleteBtn {
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.7rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: 0.2s;
-  font-weight: 500;
-}
-
-.playBtn { background: #b5ead7; color: #000; }
-.playBtn:hover { background: #9ed9c6; }
-
-.resetBtn { background: #ffdac1; color: #000; }
-.resetBtn:hover { background: #f9caa5; }
-
-.deleteBtn { background: #ffb7b2; color: #000; }
-.deleteBtn:hover { background: #f39a95; }
-
-/* ---------- ซ่อนซ้ายเวลา Fullscreen ---------- */
 .hideLeft .left {
   display: none;
 }
+
+.petContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  padding: 1rem;
+}
+.fullscreen {
+  width: 100%;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.subtitle {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.pet {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: transform 0.5s ease-in-out, background 0.3s;
+}
+.petFace {
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: white;
+  position: relative;
+}
+.petFace::before,
+.petFace::after {
+  content: "";
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  top: 25%;
+  border-radius: 50%;
+  background: black;
+}
+.petFace::before {
+  left: 20%;
+}
+.petFace::after {
+  right: 20%;
+}
+
+.theme0 { background: var(--blue); }
+.theme1 { background: var(--green); }
+.theme2 { background: var(--purple); }
+.theme3 { background: var(--pink); }
+
+.timeText {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.startBtn, .resetBtn, .fullscreenBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+.startBtn { background: var(--green); }
+.resetBtn { background: var(--blue); }
+.fullscreenBtn { background: #333; }
+
+.themeDots {
+  display: flex;
+  gap: 0.5rem;
+}
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: transform 0.2s;
+}
+.dot:hover { transform: scale(1.2); }
+.active { opacity: 1; border: 2px solid #333; }
+.theme0.dot { background: var(--blue); }
+.theme1.dot { background: var(--green); }
+.theme2.dot { background: var(--purple); }
+.theme3.dot { background: var(--pink); }

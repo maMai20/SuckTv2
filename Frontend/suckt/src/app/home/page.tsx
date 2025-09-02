@@ -141,7 +141,6 @@ export default function Home() {
           <button className={styles.featureBlock}><CalendarMonthIcon fontSize="large" /><span>Calendar</span></button>
           <button className={styles.featureBlock}><ChecklistIcon fontSize="large" /><span>Todo List</span></button>
           <button className={styles.featureBlock}><TimerIcon fontSize="large" /><span>Timer</span></button>
-          <button className={styles.featureBlock}><ChatIcon fontSize="large" /><span>Chat</span></button>
         </div>
 
         <audio

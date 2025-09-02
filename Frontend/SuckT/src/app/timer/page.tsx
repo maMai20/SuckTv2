@@ -1,136 +1,14 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/timer.module.css';
 
-interface CustomTimer {
-  id: number;
-  minutes: number;
-  secondsLeft: number;
-  label: string;
-  running: boolean;
-}
-
-function CustomTimerList() {
-  const [timers, setTimers] = useState<CustomTimer[]>([]);
-
-  const addTimer = () => {
-    const newTimer: CustomTimer = {
-      id: Date.now(),
-      minutes: 5,
-      secondsLeft: 5 * 60,
-      label: '',
-      running: false,
-    };
-    setTimers(prev => [...prev, newTimer]);
-  };
-
-  const toggleTimer = (id: number) => {
-    setTimers(prev =>
-      prev.map(t =>
-        t.id === id ? { ...t, running: !t.running } : t
-      )
-    );
-  };
-
-  const resetTimer = (id: number) => {
-    setTimers(prev =>
-      prev.map(t =>
-        t.id === id ? { ...t, secondsLeft: t.minutes * 60, running: false } : t
-      )
-    );
-  };
-
-  const deleteTimer = (id: number) => {
-    setTimers(prev => prev.filter(t => t.id !== id));
-  };
-
-  const updateMinutes = (id: number, minutes: number) => {
-    setTimers(prev =>
-      prev.map(t =>
-        t.id === id
-          ? { ...t, minutes, secondsLeft: minutes * 60 }
-          : t
-      )
-    );
-  };
-
-  const updateLabel = (id: number, label: string) => {
-    setTimers(prev =>
-      prev.map(t => (t.id === id ? { ...t, label } : t))
-    );
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimers(prev =>
-        prev.map(t =>
-          t.running && t.secondsLeft > 0
-            ? { ...t, secondsLeft: t.secondsLeft - 1 }
-            : t
-        )
-      );
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const format = (sec: number) => {
-    const m = Math.floor(sec / 60);
-    const s = sec % 60;
-    return `${m.toString().padStart(2, '0')}:${s
-      .toString()
-      .padStart(2, '0')}`;
-  };
-
-  return (
-    <div className={styles.left}>
-      <h2 className={styles.sectionTitle}>Custom Timers</h2>
-      <button onClick={addTimer} className={styles.addBtn}>➕ Add Timer</button>
-      <div className={styles.timerList}>
-        {timers.map(t => (
-          <div key={t.id} className={styles.timerItem}>
-            {/* เปลี่ยนจาก range → number input */}
-            <input
-              type="number"
-              min={1}
-              max={600}
-              value={t.minutes}
-              onChange={e => updateMinutes(t.id, parseInt(e.target.value) || 1)}
-              className={styles.numberInput}
-            />
-            <span>min</span>
-
-            <input
-              type="text"
-              placeholder="Label..."
-              value={t.label}
-              onChange={e => updateLabel(t.id, e.target.value)}
-              className={styles.labelInput}
-            />
-
-            <div className={styles.timeText}>{format(t.secondsLeft)}</div>
-            <div className={styles.timerActions}>
-              <button onClick={() => toggleTimer(t.id)} className={styles.playBtn}>
-                {t.running ? '⏸ Pause' : '▶ Start'}
-              </button>
-              <button onClick={() => resetTimer(t.id)} className={styles.resetBtn}>
-                ⏹ Reset
-              </button>
-              <button onClick={() => deleteTimer(t.id)} className={styles.deleteBtn}>
-                ❌ Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Stopwatch() {
+// ================== Stopwatch with Pet ==================
+function FocusPetTimer({ isFullscreen, setIsFullscreen }: { isFullscreen: boolean, setIsFullscreen: (v: boolean) => void }) {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [theme, setTheme] = useState(0); // 0=blue,1=green,2=purple,3=pink
 
   useEffect(() => {
     if (running) {
@@ -152,31 +30,58 @@ function Stopwatch() {
       .padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
+  // ตัวละครโตตามเวลา (ใช้ scale)
+  const petSize = Math.min(1 + time / 60, 2); // โตสูงสุด 2x
+
   return (
-    <div className={`${styles.right} ${isFullscreen ? styles.fullscreen : ''}`}>
+    <div className={`${styles.petContainer} ${isFullscreen ? styles.fullscreen : ''}`}>
+      <h2 className={styles.title}>Focus Pet Timer</h2>
+      <p className={styles.subtitle}>พักกันสักหน่อยไหม?</p>
+
+      <div className={`${styles.pet} ${styles[`theme${theme}`]}`} style={{ transform: `scale(${petSize})` }}>
+        <div className={styles.petFace}></div>
+      </div>
+
       <div className={styles.timeText}>{format(time)}</div>
+
       <div className={styles.buttonRow}>
         <button onClick={() => setRunning(p => !p)} className={styles.startBtn}>
-          {running ? '⏸ Pause' : '▶ Start'}
+          {running ? 'หยุด' : 'เริ่ม'}
         </button>
         <button onClick={() => { setRunning(false); setTime(0); }} className={styles.resetBtn}>
-          ⏹ Reset
+          รีเซ็ต
         </button>
-        <button onClick={() => setIsFullscreen(p => !p)} className={styles.fullscreenBtn}>
-          {isFullscreen ? '🗕 Exit Full' : '🗖 Fullscreen'}
+        <button onClick={() => setIsFullscreen(!isFullscreen)} className={styles.fullscreenBtn}>
+          {isFullscreen ? 'ออกจากเต็มหน้า' : 'ขยายเต็มหน้า'}
         </button>
+      </div>
+
+      <div className={styles.themeDots}>
+        {[0, 1, 2, 3].map(i => (
+          <span
+            key={i}
+            className={`${styles.dot} ${theme === i ? styles.active : ''} ${styles[`theme${i}`]}`}
+            onClick={() => setTheme(i)}
+          ></span>
+        ))}
       </div>
     </div>
   );
 }
 
+// ================== Page ==================
 export default function TimerPage() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   return (
     <div className={`${styles.container} ${isFullscreen ? styles.hideLeft : ''}`}>
-      <CustomTimerList />
-      <Stopwatch />
+      {!isFullscreen && (
+        <div className={styles.left}>
+          <h2 className={styles.sectionTitle}>⏱ Focus Timers</h2>
+          <p>ตรงนี้จะเป็นที่จับเวลาและเพิ่มกิจกรรม</p>
+        </div>
+      )}
+      <FocusPetTimer isFullscreen={isFullscreen} setIsFullscreen={setIsFullscreen} />
     </div>
   );
 }

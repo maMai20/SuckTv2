@@ -3,6 +3,7 @@
 import { ThemeProviderContext, useThemeMode } from '../../context/ThemeContext';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import { ReactNode, useMemo } from 'react';
+import './globals.css';
 
 function InnerTheme({ children }: { children: ReactNode }) {
   const { mode } = useThemeMode();

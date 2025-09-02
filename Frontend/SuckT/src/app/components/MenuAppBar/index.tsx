@@ -39,7 +39,6 @@ const menuItemsPrimary = [
   { text: 'Calendar', icon: <CalendarMonthIcon /> },
   { text: 'To do List', icon: <ListAltIcon /> },
   { text: 'Timer', icon: <TimerIcon /> },
-  { text: 'Chat', icon: <ChatIcon /> },
 ];
 
 const menuItemsSecondary = [{ text: 'Logout', icon: <LogoutIcon /> }];
