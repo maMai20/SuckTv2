@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/timer.module.css';
 
-// ================== Stopwatch with Pet ==================
+// ================== Stopwatch with Cat Pet ==================
 function FocusPetTimer({ isFullscreen, setIsFullscreen }: { isFullscreen: boolean, setIsFullscreen: (v: boolean) => void }) {
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
@@ -30,35 +30,44 @@ function FocusPetTimer({ isFullscreen, setIsFullscreen }: { isFullscreen: boolea
       .padStart(2, '0')}`;
   };
 
-  // ขยับสัตว์เลี้ยง + ขยาย
-  const petSize = Math.min(1 + time / 60, 2); 
+  // แมวค่อยๆโต (สูงสุด 1.5 เท่า)
+  const petSize = Math.min(1 + time / 100, 1.5);
 
   return (
     <div className={`${styles.petContainer} ${isFullscreen ? styles.fullscreen : ''}`}>
-      <h2 className={styles.title}>Focus Pet Timer</h2>
+      <h2 className={styles.title}>Focus Cat Timer</h2>
 
 
+      {/* 🐱 ตัวแมว */}
       <div
-        className={`${styles.pet} ${styles[`theme${theme}`]}`}
-        style={{ transform: `scale(${petSize}) translateY(-20px)` }} // ยกขึ้นไม่ให้ทับข้อความ
+        className={`${styles.cat} ${styles[`theme${theme}`]}`}
+        style={{ transform: `scale(${petSize}) translateY(-5px)` }}
       >
-        <div className={styles.petFace}></div>
+        <div className={styles.catEars}></div>
+        <div className={styles.catFace}>
+          <div className={styles.catEyes}></div>
+          <div className={styles.catMouth}></div>
+        </div>
+        <div className={styles.catTail}></div>
       </div>
 
+      {/* เวลา */}
       <div className={styles.timeText}>{format(time)}</div>
 
+      {/* ปุ่มควบคุม */}
       <div className={styles.buttonRow}>
-        <button onClick={() => setRunning(p => !p)} className={styles.startBtn}>
-          {running ? 'หยุด' : 'เริ่ม'}
+        <button onClick={() => setRunning(p => !p)} className={styles.mainBtn}>
+          {running ? '⏸ หยุด' : '▶️ เริ่ม'}
         </button>
-        <button onClick={() => { setRunning(false); setTime(0); }} className={styles.resetBtn}>
-          รีเซ็ต
+        <button onClick={() => { setRunning(false); setTime(0); }} className={styles.secondaryBtn}>
+          🔄 รีเซ็ต
         </button>
-        <button onClick={() => setIsFullscreen(!isFullscreen)} className={styles.fullscreenBtn}>
-          {isFullscreen ? 'ออกจากเต็มหน้า' : 'ขยายเต็มหน้า'}
+        <button onClick={() => setIsFullscreen(!isFullscreen)} className={styles.secondaryBtn}>
+          {isFullscreen ? '↩️ ออกจากเต็มหน้า' : '⛶ ขยายเต็มหน้า'}
         </button>
       </div>
 
+      {/* จุดเลือกธีม */}
       <div className={styles.themeDots}>
         {[0, 1, 2, 3].map(i => (
           <span
@@ -103,11 +112,11 @@ function CustomTimerItem({ label, minutes, onDelete }: { label: string; minutes:
       </div>
       <p>{format(timeLeft)}</p>
       <div>
-        <button onClick={() => setRunning(p => !p)} className={styles.startBtn}>
-          {running ? 'หยุด' : 'เริ่ม'}
+        <button onClick={() => setRunning(p => !p)} className={styles.mainBtn}>
+          {running ? '⏸ หยุด' : '▶️ เริ่ม'}
         </button>
-        <button onClick={() => { setRunning(false); setTimeLeft(minutes * 60); }} className={styles.resetBtn}>
-          รีเซ็ต
+        <button onClick={() => { setRunning(false); setTimeLeft(minutes * 60); }} className={styles.secondaryBtn}>
+          🔄 รีเซ็ต
         </button>
       </div>
     </div>
@@ -127,19 +136,12 @@ export default function TimerPage() {
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const tracks = [
-    '/music/focus1.mp3',
-    '/music/focus2.mp3',
-    '/music/focus3.mp3',
-  ];
+  const tracks = ['/music/focus1.mp3', '/music/focus2.mp3', '/music/focus3.mp3'];
 
   const togglePlay = () => {
     if (!audioRef.current) return;
-    if (playing) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
+    if (playing) audioRef.current.pause();
+    else audioRef.current.play();
     setPlaying(!playing);
   };
 
@@ -188,7 +190,7 @@ export default function TimerPage() {
               onChange={(e) => setMinutes(Number(e.target.value))}
               className={styles.input}
             />
-            <button onClick={addTimer} className={styles.addBtn}>เพิ่มตัวจับเวลา</button>
+            <button onClick={addTimer} className={styles.mainBtn}>➕ เพิ่มตัวจับเวลา</button>
           </div>
 
           <div className={styles.customTimerList}>
@@ -202,12 +204,13 @@ export default function TimerPage() {
             ))}
           </div>
 
+          {/* 🎵 Music Player */}
           <div className={styles.musicControl}>
-            <button onClick={prevTrack} className={styles.musicBtn}>⏮</button>
-            <button onClick={togglePlay} className={styles.musicBtn}>
+            <button onClick={prevTrack} className={styles.secondaryBtn}>⏮</button>
+            <button onClick={togglePlay} className={styles.mainBtn}>
               {playing ? '⏸' : '▶️'}
             </button>
-            <button onClick={nextTrack} className={styles.musicBtn}>⏭</button>
+            <button onClick={nextTrack} className={styles.secondaryBtn}>⏭</button>
           </div>
           <div className={styles.volumeControl}>
             <input

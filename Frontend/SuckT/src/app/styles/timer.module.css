@@ -1,206 +1,231 @@
-/* ===== Container Layout ===== */
+/* Layout */
 .container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: #f8fafc;
+  background: black;
+  color: #ffffff;
   overflow: hidden;
 }
 
 .left {
-  width: 320px;
-  padding: 1rem;
+  width: 380px;
+  padding: 2.5rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
-  display: flex;
-  flex-direction: column;
   overflow-y: auto;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hideLeft .left {
   display: none;
 }
 
-.sectionTitle {
-  font-size: 1.2rem;
+/* Titles */
+.title {
+  font-size: 1.5rem;
+  padding: 100px;
   font-weight: bold;
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  color: #94a3b8;
   margin-bottom: 1rem;
 }
 
-/* ===== Pet Timer ===== */
+.sectionTitle {
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 1rem;
+}
+
+/* Pet Container */
 .petContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  transition: all 0.3s ease;
-  padding: 2rem;
+  align-items: center;
 }
 
 .fullscreen {
+  flex: 1;
   width: 100%;
 }
 
-.title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.subtitle {
-  font-size: 0.9rem;
-  opacity: 0.7;
-  margin-bottom: 1rem;
-}
-
-/* Pet */
-.pet {
+/* 🐱 Cat Design */
+.cat {
   width: 120px;
   height: 120px;
+  background: #f1f5f9;
   border-radius: 50%;
-  background: #38bdf8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  transition: transform 0.4s ease;
-  animation: float 3s ease-in-out infinite;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
 }
-.petFace {
-  width: 60px;
+
+.catEars {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background: #ffffff;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-20deg);
+}
+
+.catEars::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  width: 30px;
+  height: 30px;
+  background: #f1f5f9;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(20deg);
+}
+
+.catFace {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 80px;
   height: 60px;
-  background: white;
+  background: #f1f5f9;
+  border-radius: 40px;
+}
+
+.catEyes {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  background: #000;
   border-radius: 50%;
+  box-shadow: 40px 0 #000;
+  animation: blink 4s infinite;
 }
 
-/* Pet Themes */
-.theme0 { background: #38bdf8; }
-.theme1 { background: #f472b6; }
-.theme2 { background: #34d399; }
-.theme3 { background: #facc15; }
-
-/* Floating animation */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0px); }
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
 }
 
+.catMouth {
+  position: absolute;
+  bottom: 10px;
+  left: 35px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #000;
+  border-top: none;
+  border-radius: 0 0 50% 50%;
+}
+
+.catTail {
+  position: absolute;
+  right: -20px;
+  bottom: 20px;
+  width: 40px;
+  height: 10px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  transform: rotate(20deg);
+  animation: tailMove 2s infinite ease-in-out;
+}
+
+@keyframes tailMove {
+  0%, 100% { transform: rotate(20deg); }
+  50% { transform: rotate(-10deg); }
+}
+
+/* Timer */
 .timeText {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin: 2.5rem 0;
 }
 
 /* Buttons */
 .buttonRow {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.startBtn, .resetBtn, .fullscreenBtn, .addBtn, .musicBtn {
-  background: #2563eb;
-  color: white;
+.mainBtn {
+  padding: 0rem 1rem;
+  background: #a39f9f;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+
 }
-.startBtn:hover, .resetBtn:hover, .fullscreenBtn:hover, .addBtn:hover, .musicBtn:hover {
-  transform: scale(1.05);
-  background: #1d4ed8;
+
+.secondaryBtn {
+  padding: 0.5rem 1rem;
+  background: #475569;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 /* Theme Dots */
 .themeDots {
+  margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
 }
+
 .dot {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   cursor: pointer;
+  border: 2px solid rgb(0, 0, 0);
   opacity: 0.6;
-  transition: transform 0.2s, opacity 0.2s;
 }
-.dot:hover {
-  transform: scale(1.2);
-  opacity: 1;
-}
+
 .active {
-  border: 2px solid white;
   opacity: 1;
 }
 
-/* ===== Custom Timer ===== */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.input {
-  padding: 0.4rem;
-  border-radius: 0.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
-}
-.addBtn {
-  margin-top: 0.5rem;
-}
+.theme0 { background: #ffb9f6; }
+.theme1 { background: #8aacfd; }
+.theme2 { background: #a7f3d0; }
+.theme3 { background: #fca5a5; }
 
-.customTimerList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
+/* Custom Timer */
 .customTimer {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 0.8rem;
-  border-radius: 0.6rem;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  padding: 1rem;
+  margin: 2rem 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
 }
 
 .customTimerHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-.deleteBtn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #e11d48;
-}
-.deleteBtn:hover {
-  transform: scale(1.1);
 }
 
-/* ===== Music Player ===== */
+.deleteBtn {
+  background: transparent;
+  color: #ca0000;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+/* Music Player */
 .musicControl {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-top: 1rem;
-}
-.musicBtn {
-  font-size: 1rem;
+  justify-content: center;
 }
 
 .volumeControl {
   margin-top: 0.5rem;
   text-align: center;
-}
-.volumeControl input {
-  width: 80%;
 }
