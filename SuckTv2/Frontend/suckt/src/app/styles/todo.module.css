@@ -1,0 +1,1145 @@
+:root {
+  --background: #f0f2f5; /* Light Gray Background */
+  --foreground: #1a1a1a; /* Dark Text */
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #333333;
+  --sidebar-border: #e5e7eb;
+
+  --card-bg: #ffffff;
+  --card-text: #1a1a1a;
+  --card-border: #e0e0e0;
+
+  --primary-btn-bg: #007bff; /* Blue */
+  --primary-btn-text: #ffffff;
+  --primary-btn-hover: #0056b3;
+
+  --accent-btn-bg: #6c757d; /* Gray */
+  --accent-btn-text: #ffffff;
+  --accent-btn-hover: #5a6268;
+
+  --delete-btn-color: #dc3545; /* Red */
+  --edit-btn-color: #6c757d; /* Gray */
+
+  --input-bg: #f8f9fa;
+  --input-border: #ced4da;
+  --input-focus-ring: #80bdff;
+
+  --category-active-bg: #e0f2fe; /* Light blue for active category */
+  --category-active-text: #007bff;
+  --category-active-shadow: rgba(0, 123, 255, 0.1);
+
+  --progress-bg: #e9ecef;
+  --progress-fill: #28a745; /* Green for progress */
+
+  --muted-text: #6c757d;
+  --placeholder-text: #adb5bd;
+
+  --duedate-normal: #6c757d;
+  --duedate-warning: #ffc107; /* Yellow for soon */
+  --duedate-danger: #dc3545; /* Red for overdue */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1e24; /* Darker Background */
+    --foreground: #e0e0e0; /* Light Text */
+    --sidebar-bg: #2d343e;
+    --sidebar-text: #f0f0f0;
+    --sidebar-border: #3d4652;
+
+    --card-bg: #2d343e;
+    --card-text: #e0e0e0;
+    --card-border: #3d4652;
+
+    --primary-btn-bg: #3b82f6;
+    --primary-btn-text: #ffffff;
+    --primary-btn-hover: #2563eb;
+
+    --accent-btn-bg: #6b7280;
+    --accent-btn-text: #ffffff;
+    --accent-btn-hover: #4b5563;
+
+    --delete-btn-color: #ef4444;
+    --edit-btn-color: #9ca3af;
+
+    --input-bg: #3d4652;
+    --input-border: #4b5563;
+    --input-focus-ring: #60a5fa;
+
+    --category-active-bg: #1e3a8a;
+    --category-active-text: #60a5fa;
+    --category-active-shadow: rgba(59, 130, 246, 0.2);
+
+    --progress-bg: #4b5563;
+    --progress-fill: #10b981;
+
+    --muted-text: #9ca3af;
+    --placeholder-text: #9ca3af;
+
+    --duedate-normal: #9ca3af;
+    --duedate-warning: #facc15;
+    --duedate-danger: #ef4444;
+  }
+}
+
+/* --- 2. Base & Layout --- */
+.container {
+  min-height: 100vh;
+  background-color: var(--background);
+  display: flex;
+  color: var(--foreground);
+  font-family: 'IBM Plex Sans Thai', sans-serif; /* ใช้ฟอนต์ไทยที่ดูทันสมัย */
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sidebar {
+  width: 300px; /* ปรับความกว้าง sidebar เล็กน้อย */
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* เพิ่มช่องว่างระหว่างส่วน */
+  flex-shrink: 0;
+  box-shadow: 1px 0 5px rgba(0,0,0,0.05); /* เพิ่มเงาเล็กน้อย */
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2.5rem; /* เพิ่ม padding ให้ดูกว้างขึ้น */
+  min-width: 0;
+  overflow-y: auto;
+  max-width: 900px; /* จำกัดความกว้างเนื้อหาหลัก */
+  margin: 0 auto; /* จัดกึ่งกลาง */
+}
+
+/* --- 3. Sidebar Components --- */
+.categorySection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem; /* H2 */
+  font-weight: 600;
+  color: var(--sidebar-text);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* เพิ่มระยะห่างไอคอน */
+  margin-bottom: 0.5rem;
+}
+
+.categoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem; /* เพิ่ม padding */
+  border-radius: 0.75rem; /* ทำให้โค้งมนขึ้น */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: var(--sidebar-text);
+  font-weight: 500;
+  position: relative; /* สำหรับ animation effect */
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.categoryItem::before { /* เพิ่ม effect สีพื้นหลังเมื่อ hover */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--category-active-bg);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 0;
+}
+
+.categoryItem:hover::before {
+  opacity: 0.2;
+}
+
+.categoryItemSelected {
+  background-color: var(--category-active-bg);
+  color: var(--category-active-text);
+  box-shadow: 0 4px 10px var(--category-active-shadow);
+  transform: translateY(-2px); /* ยกขึ้นเล็กน้อย */
+  font-weight: 600;
+}
+
+.categoryItemSelected::before {
+  opacity: 0 !important; /* ยกเลิก hover effect เมื่อถูกเลือก */
+}
+
+.categoryItemText {
+  flex: 1;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1; /* ให้ข้อความอยู่ด้านบน effect */
+}
+
+.categoryItemText span {
+  flex: 1;
+}
+
+.deleteCategoryBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--muted-text); /* สีเทาอ่อน */
+  z-index: 1;
+}
+
+.deleteCategoryBtn:hover {
+  transform: scale(1.2);
+  color: var(--delete-btn-color); /* เปลี่ยนเป็นสีแดงเมื่อ hover */
+}
+
+.addCategoryContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch; /* ทำให้ปุ่มและ input สูงเท่ากัน */
+  margin-top: 1rem;
+}
+
+.addCategoryInput {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--foreground);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.addCategoryInput::placeholder {
+  color: var(--placeholder-text);
+}
+
+.addCategoryInput:focus {
+  outline: none;
+  border-color: var(--input-focus-ring);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.addCategoryButton {
+  padding: 0.6rem 1rem;
+  background-color: var(--primary-btn-bg);
+  color: var(--primary-btn-text);
+  border-radius: 0.6rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.addCategoryButton:hover {
+  background-color: var(--primary-btn-hover);
+  transform: translateY(-1px);
+}
+
+.statsCard {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statsText {
+  font-size: 0.95rem;
+  color: var(--muted-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progressBarContainer {
+  background-color: var(--progress-bg);
+  border-radius: 9999px;
+  height: 0.6rem; /* เพิ่มความหนา */
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBar {
+  background-color: var(--progress-fill);
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease-in-out; /* ทำให้ smooth ขึ้น */
+}
+
+/* --- 4. Main Content Components --- */
+.mainTitle {
+  font-size: 2rem; /* H1 */
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 2rem; /* เพิ่มระยะห่าง */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.addTaskCard {
+  background-color: var(--card-bg);
+  border-radius: 1rem; /* โค้งมนมากขึ้น */
+  padding: 1.75rem; /* เพิ่ม padding */
+  border: 1px solid var(--card-border);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* เพิ่มเงาให้ดูมีมิติ */
+}
+
+.addTaskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* เพิ่มระยะห่าง */
+}
+
+.inputGroup {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.textInput, .selectInput, .dateInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 0.75rem; /* โค้งมนมากขึ้น */
+  min-width: 0;
+  font-size: 1rem;
+  color: var(--foreground);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.textInput::placeholder, .selectInput::placeholder, .dateInput::placeholder {
+  color: var(--placeholder-text);
+}
+
+.textInput:focus, .selectInput:focus, .dateInput:focus {
+  outline: none;
+  border-color: var(--input-focus-ring);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.primaryButton {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-btn-bg);
+  color: var(--primary-btn-text);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.primaryButton:hover {
+  background-color: var(--primary-btn-hover);
+  transform: translateY(-1px);
+}
+
+.searchContainer {
+  margin-bottom: 2rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  color: var(--foreground);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.searchInput::placeholder {
+  color: var(--placeholder-text);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--input-focus-ring);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* --- 5. Task List & Items --- */
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.taskItem {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  transition: all 0.2s ease-in-out;
+  position: relative; /* สำหรับ animation effect */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.taskItem:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.taskItemDone {
+  opacity: 0.7;
+  border-left: 5px solid var(--progress-fill); /* Mark as done */
+}
+
+.taskCheckbox {
+  appearance: none; /* ซ่อน default checkbox */
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--muted-text);
+  border-radius: 0.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+}
+
+.taskCheckbox::after {
+  content: '✓';
+  color: var(--primary-btn-text);
+  font-size: 1rem;
+  display: none;
+}
+
+.taskCheckbox:checked {
+  background-color: var(--primary-btn-bg);
+  border-color: var(--primary-btn-bg);
+}
+
+.taskCheckbox:checked::after {
+  display: block;
+}
+
+.taskTextContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.taskText {
+  color: var(--card-text);
+  cursor: pointer;
+  word-break: break-word;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: text-decoration 0.2s;
+}
+
+.taskTextDone {
+  text-decoration: line-through;
+  color: var(--muted-text);
+}
+
+.taskMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.priorityIcon {
+  line-height: 1;
+}
+
+.dueDateText {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--duedate-normal);
+}
+
+.dueDateWarning {
+  color: var(--duedate-warning);
+  font-weight: 500;
+}
+
+.dueDateDanger {
+  color: var(--duedate-danger);
+  font-weight: 600;
+}
+
+
+.editTaskContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.editInput {
+  flex: 1;
+  padding: 0.4rem 0.7rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  color: var(--foreground);
+  font-size: 1rem;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.editInput:focus {
+  outline: none;
+  border-color: var(--input-focus-ring);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.taskActions {
+  display: flex;
+  gap: 0.3rem; /* ลดระยะห่างปุ่ม */
+  flex-shrink: 0;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem; /* เพิ่มขนาดไอคอน */
+  transition: transform 0.2s, color 0.2s;
+  padding: 0.4rem; /* เพิ่ม padding ให้กดง่ายขึ้น */
+  line-height: 1;
+  border-radius: 0.5rem; /* ทำให้ปุ่มโค้งมน */
+}
+
+.editButton {
+  color: var(--edit-btn-color);
+}
+.editButton:hover {
+  transform: scale(1.1);
+  color: var(--primary-btn-bg); /* เปลี่ยนสีเมื่อ hover */
+}
+
+.deleteButton {
+  color: var(--muted-text);
+}
+.deleteButton:hover {
+  transform: scale(1.1);
+  color: var(--delete-btn-color);
+}
+
+.saveButton {
+  color: var(--primary-btn-bg);
+}
+.saveButton:hover {
+  transform: scale(1.1);
+}
+
+.cancelButton {
+  color: var(--delete-btn-color);
+}
+.cancelButton:hover {
+  transform: scale(1.1);
+}
+
+.noTasksMessage {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--muted-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.noTasksIllustration {
+  font-size: 4rem; /* ขนาดไอคอน */
+  line-height: 1;
+  color: var(--input-border);
+}
+ขั้นตอนที่ 3: อัปเดต src/app/todolist/page.tsx (โค้ดใหม่ทั้งหมด)
+ลบโค้ด React เดิมในไฟล์ page.tsx ออกทั้งหมด แล้วแทนที่ด้วยโค้ดด้านล่างนี้ครับ
+
+JavaScript
+
+"use client"
+
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion" // เพิ่ม AnimatePresence
+import styles from '../styles/todo.module.css'; // ตรวจสอบว่า path นี้ถูกต้อง
+
+// เพิ่ม Font Awesome icons
+// คุณจะต้องติดตั้ง @fortawesome/react-fontawesome และ @fortawesome/free-solid-svg-icons ก่อน:
+// npm install @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFolderOpen, faPlus, faChartBar, faTasks, faSearch,
+  faEdit, faTrashAlt, faCheck, faTimes,
+  faCircleUp, faCircleRight, faCircleDown,
+  faCalendarAlt, faExclamationCircle, faInfoCircle, faFolder, faClipboardList
+} from '@fortawesome/free-solid-svg-icons';
+
+
+type Task = {
+  id: number
+  text: string
+  done: boolean
+  category: string
+  createdAt: Date
+  dueDate?: Date
+  priority: "low" | "medium" | "high"
+}
+
+// Animation variants สำหรับ Framer Motion
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, y: -20, scale: 0.95, transition: { duration: 0.2 } },
+};
+
+const categoryVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+  exit: { opacity: 0, x: -20, transition: { duration: 0.2 } },
+};
+
+export default function Home() {
+  const [newTask, setNewTask] = useState<string>("")
+  const [newTaskDueDate, setNewTaskDueDate] = useState<string>("")
+  const [newTaskPriority, setNewTaskPriority] = useState<"low" | "medium" | "high">("medium")
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [categories, setCategories] = useState<string[]>(["การเรียน", "งานบ้าน", "อื่น ๆ"])
+  const [selectedCategory, setSelectedCategory] = useState<string>("การเรียน")
+  const [newCategory, setNewCategory] = useState<string>("")
+  const [editingTask, setEditingTask] = useState<number | null>(null)
+  const [editText, setEditText] = useState<string>("")
+  const [searchTerm, setSearchTerm] = useState<string>("")
+
+  // Load from localStorage
+  useEffect(() => {
+    const savedTasks = localStorage.getItem("todolist-tasks")
+    const savedCategories = localStorage.getItem("todolist-categories")
+    const savedSelectedCategory = localStorage.getItem("todolist-selected-category")
+
+    if (savedTasks) {
+      const parsedTasks = JSON.parse(savedTasks).map((task: any) => ({
+        ...task,
+        createdAt: new Date(task.createdAt),
+        dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
+      }))
+      setTasks(parsedTasks)
+    }
+
+    if (savedCategories) {
+      setCategories(JSON.parse(savedCategories))
+    }
+
+    if (savedSelectedCategory) {
+      setSelectedCategory(savedSelectedCategory)
+    }
+  }, [])
+
+  // Save to localStorage
+  useEffect(() => {
+    localStorage.setItem("todolist-tasks", JSON.stringify(tasks))
+  }, [tasks])
+
+  useEffect(() => {
+    localStorage.setItem("todolist-categories", JSON.stringify(categories))
+  }, [categories])
+
+  useEffect(() => {
+    localStorage.setItem("todolist-selected-category", selectedCategory)
+  }, [selectedCategory])
+
+  const addTask = () => {
+    if (newTask.trim() === "") return
+    const newItem: Task = {
+      id: Date.now(),
+      text: newTask.trim(),
+      done: false,
+      category: selectedCategory,
+      createdAt: new Date(),
+      dueDate: newTaskDueDate ? new Date(newTaskDueDate) : undefined,
+      priority: newTaskPriority,
+    }
+    setTasks([...tasks, newItem])
+    setNewTask("")
+    setNewTaskDueDate("")
+    setNewTaskPriority("medium")
+  }
+
+  const toggleTask = (id: number) => {
+    setTasks(tasks.map((task) => (task.id === id ? { ...task, done: !task.done } : task)))
+  }
+
+  const deleteTask = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
+  const addCategory = () => {
+    const cat = newCategory.trim()
+    if (!cat || categories.includes(cat)) {
+      alert("ชื่อหมวดหมู่ไม่ถูกต้อง หรือมีหมวดหมู่นี้อยู่แล้ว") // เพิ่ม feedback
+      return
+    }
+    setCategories([...categories, cat])
+    setNewCategory("")
+    setSelectedCategory(cat) // เลือกหมวดหมู่ใหม่ทันที
+  }
+
+  const deleteCategory = (cat: string) => {
+    if (categories.length === 1) {
+      alert("ไม่สามารถลบหมวดหมู่สุดท้ายได้")
+      return
+    }
+    if (!confirm(`ต้องการลบหมวดหมู่ "${cat}" และงานทั้งหมดที่อยู่ในหมวดหมู่นี้หรือไม่?`)) return
+    
+    // ลบหมวดหมู่
+    const updatedCategories = categories.filter((c) => c !== cat);
+    setCategories(updatedCategories);
+    
+    // ลบงานที่อยู่ในหมวดหมู่นั้น
+    setTasks(tasks.filter((task) => task.category !== cat));
+    
+    // ตั้งค่า selectedCategory ใหม่
+    if (selectedCategory === cat) {
+      setSelectedCategory(updatedCategories[0] || ""); // เลือกหมวดหมู่แรกที่เหลืออยู่
+    }
+  }
+
+  const startEditTask = (id: number, currentText: string) => {
+    setEditingTask(id)
+    setEditText(currentText)
+  }
+
+  const saveEditTask = (id: number) => {
+    if (editText.trim() === "") return
+    setTasks(tasks.map((task) => (task.id === id ? { ...task, text: editText.trim() } : task)))
+    setEditingTask(null)
+    setEditText("")
+  }
+
+  const cancelEdit = () => {
+    setEditingTask(null)
+    setEditText("")
+  }
+
+  const getFilteredTasks = () => {
+    let filteredTasks = tasks.filter((task) => task.category === selectedCategory)
+
+    if (searchTerm.trim()) {
+      filteredTasks = filteredTasks.filter((task) => task.text.toLowerCase().includes(searchTerm.toLowerCase()))
+    }
+
+    return filteredTasks.sort((a, b) => {
+      // งานที่ยังไม่เสร็จอยู่ด้านบน
+      if (a.done !== b.done) return a.done ? 1 : -1
+
+      // เรียงตาม Due Date (งานที่ใกล้ถึงก่อน)
+      if (a.dueDate && b.dueDate) {
+        if (a.dueDate.getTime() !== b.dueDate.getTime()) {
+          return a.dueDate.getTime() - b.dueDate.getTime();
+        }
+      } else if (a.dueDate) {
+        return -1; // งานที่มี Due Date มาก่อน
+      } else if (b.dueDate) {
+        return 1; // งานที่มี Due Date มาทีหลัง
+      }
+
+      // เรียงตาม Priority (สูง -> ต่ำ)
+      const priorityOrder = { high: 3, medium: 2, low: 1 }
+      if (priorityOrder[b.priority] !== priorityOrder[a.priority]) {
+        return priorityOrder[b.priority] - priorityOrder[a.priority]
+      }
+      
+      // เรียงตามเวลาสร้าง (งานใหม่สุดอยู่บน)
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    })
+  }
+
+  const getStats = () => {
+    const categoryTasks = tasks.filter((task) => task.category === selectedCategory)
+    const completed = categoryTasks.filter((task) => task.done).length
+    const total = categoryTasks.length
+    return { completed, total }
+  }
+
+  const stats = getStats()
+  const filteredTasks = getFilteredTasks()
+
+  const getPriorityIcon = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return <FontAwesomeIcon icon={faCircleUp} className="text-red-500" title="ความสำคัญสูง" />
+      case "medium":
+        return <FontAwesomeIcon icon={faCircleRight} className="text-yellow-500" title="ความสำคัญปานกลาง" />
+      case "low":
+        return <FontAwesomeIcon icon={faCircleDown} className="text-green-500" title="ความสำคัญต่ำ" />
+      default:
+        return null
+    }
+  }
+
+  const getDueDateClass = (dueDate?: Date) => {
+    if (!dueDate) return styles.dueDateText;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // รีเซ็ตเวลาเพื่อเปรียบเทียบแค่วันที่
+
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+
+    const diffTime = due.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+      return `${styles.dueDateText} ${styles.dueDateDanger}`; // เลยกำหนด
+    } else if (diffDays <= 2) {
+      return `${styles.dueDateText} ${styles.dueDateWarning}`; // ใกล้ถึงกำหนด (ภายใน 2 วัน)
+    }
+    return styles.dueDateText; // ปกติ
+  };
+
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.sidebar}>
+        <div className={styles.categorySection}>
+          <h2 className={styles.sectionTitle}><FontAwesomeIcon icon={faFolderOpen} /> หมวดหมู่</h2>
+          <ul className={styles.categoryList}>
+            <AnimatePresence mode="wait">
+              {categories.map((cat) => {
+                const catTasks = tasks.filter((task) => task.category === cat)
+                const completedCount = catTasks.filter((task) => task.done).length
+                return (
+                  <motion.li
+                    key={cat}
+                    variants={categoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className={`${styles.categoryItem} ${
+                      selectedCategory === cat ? styles.categoryItemSelected : ""
+                    }`}
+                    onClick={() => setSelectedCategory(cat)}
+                  >
+                    <span className={styles.categoryItemText}>
+                      <FontAwesomeIcon icon={faFolder} />
+                      <span>{cat} ({completedCount}/{catTasks.length})</span>
+                    </span>
+                    {categories.length > 1 && (
+                      <button
+                        className={styles.deleteCategoryBtn}
+                        onClick={(e) => {
+                          e.stopPropagation(); // หยุด event ไม่ให้ไปเลือก category
+                          deleteCategory(cat);
+                        }}
+                        title={`ลบหมวดหมู่ ${cat}`}
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </button>
+                    )}
+                  </motion.li>
+                )
+              })}
+            </AnimatePresence>
+          </ul>
+          <div className={styles.addCategoryContainer}>
+            <input
+              type="text"
+              placeholder="เพิ่มหมวดหมู่ใหม่..."
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && addCategory()}
+              className={styles.addCategoryInput}
+            />
+            <button
+              onClick={addCategory}
+              className={styles.addCategoryButton}
+              title="เพิ่มหมวดหมู่ใหม่"
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.statsCard}>
+          <h3 className={styles.sectionTitle}><FontAwesomeIcon icon={faChartBar} /> สถิติ</h3>
+          <div className={styles.statsText}>
+            <FontAwesomeIcon icon={faClipboardList} />
+            งานเสร็จแล้ว: {stats.completed}/{stats.total}
+          </div>
+          <div className={styles.progressBarContainer}>
+            <div
+              className={styles.progressBar}
+              style={{ width: `${stats.total > 0 ? (stats.completed / stats.total) * 100 : 0}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.mainContent}>
+        <h1 className={styles.mainTitle}><FontAwesomeIcon icon={faTasks} /> {selectedCategory}</h1>
+
+        <div className={styles.addTaskCard}>
+          <div className={styles.addTaskForm}>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                placeholder="เพิ่มงานใหม่ที่นี่..."
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && addTask()}
+                className={styles.textInput}
+              />
+              <button
+                onClick={addTask}
+                className={styles.primaryButton}
+                title="เพิ่มงาน"
+              >
+                เพิ่ม
+              </button>
+            </div>
+            <div className={styles.inputGroup}>
+              <select
+                value={newTaskPriority}
+                onChange={(e) => setNewTaskPriority(e.target.value as "low" | "medium" | "high")}
+                className={styles.selectInput}
+                title="ระดับความสำคัญ"
+              >
+                <option value="low">🟢 ความสำคัญต่ำ</option>
+                <option value="medium">🟡 ความสำคัญปานกลาง</option>
+                <option value="high">🔴 ความสำคัญสูง</option>
+              </select>
+              <input
+                type="date"
+                value={newTaskDueDate}
+                onChange={(e) => setNewTaskDueDate(e.target.value)}
+                className={styles.dateInput}
+                title="กำหนดวันส่ง"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="🔍 ค้นหางานในหมวดหมู่นี้..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={styles.searchInput}
+            title="ค้นหางาน"
+          />
+        </div>
+
+        <div className={styles.taskList}>
+          <AnimatePresence>
+            {filteredTasks.map((task) => (
+              <motion.div
+                key={task.id}
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className={`${styles.taskItem} ${task.done ? styles.taskItemDone : ""}`}
+              >
+                <input
+                  type="checkbox"
+                  checked={task.done}
+                  onChange={() => toggleTask(task.id)}
+                  className={styles.taskCheckbox}
+                  title={task.done ? "ทำเสร็จแล้ว" : "ยังไม่เสร็จ"}
+                />
+
+                <div className={styles.taskTextContainer}>
+                  {editingTask === task.id ? (
+                    <div className={styles.editTaskContainer}>
+                      <input
+                        type="text"
+                        value={editText}
+                        onChange={(e) => setEditText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") saveEditTask(task.id)
+                          if (e.key === "Escape") cancelEdit()
+                        }}
+                        className={styles.editInput}
+                        autoFocus
+                      />
+                      <button
+                        onClick={() => saveEditTask(task.id)}
+                        className={`${styles.iconButton} ${styles.saveButton}`}
+                        title="บันทึก"
+                      >
+                        <FontAwesomeIcon icon={faCheck} />
+                      </button>
+                      <button
+                        onClick={cancelEdit}
+                        className={`${styles.iconButton} ${styles.cancelButton}`}
+                        title="ยกเลิก"
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <span
+                        className={`${styles.taskText} ${task.done ? styles.taskTextDone : ""}`}
+                        onDoubleClick={() => startEditTask(task.id, task.text)}
+                        title="ดับเบิลคลิกเพื่อแก้ไข"
+                      >
+                        {task.text}
+                      </span>
+                      <div className={styles.taskMeta}>
+                        <span className={styles.priorityIcon}>
+                          {getPriorityIcon(task.priority)}
+                        </span>
+                        {task.dueDate && (
+                          <span className={getDueDateClass(task.dueDate)}>
+                            <FontAwesomeIcon icon={faCalendarAlt} />{" "}
+                            {task.dueDate.toLocaleDateString("th-TH")}
+                          </span>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                <div className={styles.taskActions}>
+                  {editingTask !== task.id && (
+                    <button
+                      onClick={() => startEditTask(task.id, task.text)}
+                      className={`${styles.iconButton} ${styles.editButton}`}
+                      title="แก้ไขงาน"
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => deleteTask(task.id)}
+                    className={`${styles.iconButton} ${styles.deleteButton}`}
+                    title="ลบงาน"
+                  >
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+
+          {filteredTasks.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={styles.noTasksMessage}
+            >
+              <div className={styles.noTasksIllustration}>☕</div> {/* เพิ่ม Illustration */}
+              {searchTerm ? "ไม่พบงานที่ค้นหา" : "ยังไม่มีงานในหมวดหมู่นี้"}
+              <span className={styles.mutedText}>กด 'เพิ่ม' เพื่อสร้างงานแรกของคุณ!</span>
+            </motion.div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+ขั้นตอนที่ 4: ติดตั้ง Font Awesome (ถ้ายังไม่ได้ติดตั้ง)
+โค้ดใหม่นี้ใช้ Font Awesome สำหรับไอคอนต่างๆ คุณต้องติดตั้ง package ของ Font Awesome ก่อน:
+
+Bash
+
+npm install @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+# หรือ
+yarn add @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+ขั้นตอนที่ 5: ตรวจสอบ Global CSS (สำคัญ!)
+เพื่อให้ Font Awesome แสดงผลได้ถูกต้อง คุณอาจต้องเพิ่ม CSS พื้นฐานของ Font Awesome ในไฟล์ Global CSS ของคุณ (เช่น src/app/globals.css หรือ src/globals.css):
+
+CSS
+
+/* src/app/globals.css หรือไฟล์ Global CSS ของคุณ */
+
+@import '@fortawesome/fontawesome-svg-core/styles.css'; /* เพิ่มบรรทัดนี้ */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* เพิ่ม font-family สำหรับภาษาไทยใน body หรือ root เพื่อให้มีผลทั่วเว็บ */
+body {
+  font-family: 'IBM Plex Sans Thai', sans-serif; /* ตัวอย่างการกำหนดฟอนต์ไทย */
+}
+คุณอาจจะต้องเพิ่ม Google Font "IBM Plex Sans Thai" ใน layout.tsx หรือ globals.css ด้วยนะครับ เพื่อให้รองรับภาษาไทยที่สวยงาม เช่น:
+
+JavaScript
+
+// src/app/layout.tsx
+import { Inter, IBM_Plex_Sans_Thai } from 'next/font/google' // import font
+import './globals.css' // Global CSS
+
+const ibmPlexSansThai = IBM_Plex_Sans_Thai({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['thai', 'latin'],
+  variable: '--font-ibm-plex-sans-thai',
+  display: 'swap',
+});
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="th" className={`${ibmPlexSansThai.variable}`}>
+      <body>{children}</body>
+    </html>
+  )

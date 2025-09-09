@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import "../styles/todolist.css"
+import styles from '../styles/todo.module.css';
 
 
 type Task = {
@@ -158,29 +158,27 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <div className="w-80 bg-sidebar border-r border-sidebar-border p-6 flex flex-col gap-6 flex-shrink-0">
+    <div className={styles.container}>
+      <div className={styles.sidebar}>
         <div>
-          <h2 className="text-lg font-semibold text-sidebar-foreground mb-4 flex items-center gap-2">📂 หมวดหมู่</h2>
-          <ul className="space-y-2">
+          <h2 className={styles.categoryTitle}>📂 หมวดหมู่</h2>
+          <ul className={styles.categoryList}>
             {categories.map((cat) => {
               const catTasks = tasks.filter((task) => task.category === cat)
               const completedCount = catTasks.filter((task) => task.done).length
               return (
                 <li
                   key={cat}
-                  className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all duration-200 ${
-                    selectedCategory === cat
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                      : "hover:bg-sidebar-accent/10 text-sidebar-foreground"
+                  className={`${styles.categoryItem} ${
+                    selectedCategory === cat ? styles.categoryItemSelected : ""
                   }`}
                 >
-                  <span onClick={() => setSelectedCategory(cat)} className="flex-1 text-sm font-medium">
+                  <span onClick={() => setSelectedCategory(cat)} className={styles.categoryItemText}>
                     {cat} ({completedCount}/{catTasks.length})
                   </span>
                   {categories.length > 1 && (
                     <button
-                      className="text-sidebar-accent hover:scale-110 transition-transform ml-2 flex-shrink-0"
+                      className={styles.deleteCategoryBtn}
                       onClick={() => deleteCategory(cat)}
                     >
                       ✕
@@ -192,63 +190,63 @@ export default function Home() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className={styles.addCategoryContainer}>
           <input
             type="text"
             placeholder="เพิ่มหมวดหมู่..."
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addCategory()}
-            className="w-full px-3 py-2 bg-input border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            className={styles.categoryInput}
           />
           <button
             onClick={addCategory}
-            className="w-full px-4 py-2 bg-sidebar-primary text-sidebar-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+            className={styles.secondaryButton}
           >
             เพิ่มหมวดหมู่
           </button>
         </div>
 
-        <div className="bg-card rounded-lg p-4 border border-border">
-          <h3 className="text-sm font-semibold text-card-foreground mb-2">📊 สถิติ</h3>
-          <div className="text-sm text-muted-foreground">
+        <div className={styles.statsCard}>
+          <h3 className={styles.statsTitle}>📊 สถิติ</h3>
+          <div className={styles.statsText}>
             เสร็จแล้ว: {stats.completed}/{stats.total}
           </div>
-          <div className="mt-2 bg-muted rounded-full h-2">
+          <div className={styles.progressBarContainer}>
             <div
-              className="bg-primary h-2 rounded-full transition-all duration-300"
+              className={styles.progressBar}
               style={{ width: `${stats.total > 0 ? (stats.completed / stats.total) * 100 : 0}%` }}
             />
           </div>
         </div>
       </div>
 
-      <div className="flex-1 p-6 min-w-0">
-        <h1 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">📝 {selectedCategory}</h1>
+      <div className={styles.mainContent}>
+        <h1 className={styles.mainTitle}>📝 {selectedCategory}</h1>
 
-        <div className="bg-card rounded-xl p-6 border border-border mb-6 shadow-sm">
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-3">
+        <div className={styles.addTaskCard}>
+          <div className={styles.addTaskForm}>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
                 placeholder="เพิ่มงานใหม่..."
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addTask()}
-                className="flex-1 px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring min-w-0"
+                className={styles.textInput}
               />
               <button
                 onClick={addTask}
-                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity flex-shrink-0"
+                className={styles.primaryButton}
               >
                 เพิ่ม
               </button>
             </div>
-            <div className="flex gap-3">
+            <div className={styles.inputGroup}>
               <select
                 value={newTaskPriority}
                 onChange={(e) => setNewTaskPriority(e.target.value as "low" | "medium" | "high")}
-                className="flex-1 px-3 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+                className={styles.selectInput}
               >
                 <option value="low">🟢 ความสำคัญต่ำ</option>
                 <option value="medium">🟡 ความสำคัญปานกลาง</option>
@@ -258,41 +256,39 @@ export default function Home() {
                 type="date"
                 value={newTaskDueDate}
                 onChange={(e) => setNewTaskDueDate(e.target.value)}
-                className="flex-1 px-3 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+                className={styles.dateInput}
               />
             </div>
           </div>
         </div>
 
-        <div className="mb-6">
+        <div className={styles.searchContainer}>
           <input
             type="text"
             placeholder="🔍 ค้นหางาน..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full max-w-md px-4 py-2 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+            className={styles.searchInput}
           />
         </div>
 
-        <div className="space-y-3">
+        <div className={styles.taskList}>
           {filteredTasks.map((task) => (
             <div
               key={task.id}
-              className={`bg-card rounded-lg p-4 border border-border shadow-sm transition-all duration-200 hover:shadow-md ${
-                task.done ? "opacity-60" : ""
-              }`}
+              className={`${styles.taskItem} ${task.done ? styles.taskItemDone : ""}`}
             >
-              <div className="flex items-center gap-4">
+              <div className={styles.taskItemContent}>
                 <input
                   type="checkbox"
                   checked={task.done}
                   onChange={() => toggleTask(task.id)}
-                  className="w-5 h-5 text-primary rounded focus:ring-2 focus:ring-ring"
+                  className={styles.taskCheckbox}
                 />
 
-                <div className="flex-1">
+                <div className={styles.taskTextContainer}>
                   {editingTask === task.id ? (
-                    <div className="flex gap-2">
+                    <div className={styles.editTaskContainer}>
                       <input
                         type="text"
                         value={editText}
@@ -301,28 +297,28 @@ export default function Home() {
                           if (e.key === "Enter") saveEditTask(task.id)
                           if (e.key === "Escape") cancelEdit()
                         }}
-                        className="flex-1 px-3 py-1 bg-input border border-border rounded focus:outline-none focus:ring-2 focus:ring-ring"
+                        className={styles.editInput}
                         autoFocus
                       />
-                      <button onClick={() => saveEditTask(task.id)} className="text-primary hover:opacity-70">
+                      <button onClick={() => saveEditTask(task.id)} className={`${styles.iconButton} ${styles.saveButton}`}>
                         ✓
                       </button>
-                      <button onClick={cancelEdit} className="text-destructive hover:opacity-70">
+                      <button onClick={cancelEdit} className={`${styles.iconButton} ${styles.cancelButton}`}>
                         ✕
                       </button>
                     </div>
                   ) : (
                     <div>
                       <span
-                        className={`text-card-foreground ${task.done ? "line-through" : ""} cursor-pointer`}
+                        className={`${styles.taskText} ${task.done ? styles.taskTextDone : ""}`}
                         onDoubleClick={() => startEditTask(task.id, task.text)}
                       >
                         {task.text}
                       </span>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span className="text-xs">{getPriorityIcon(task.priority)}</span>
+                      <div className={styles.taskMeta}>
+                        <span className={styles.taskMetaText}>{getPriorityIcon(task.priority)}</span>
                         {task.dueDate && (
-                          <span className="text-xs text-muted-foreground">
+                          <span className={styles.taskMetaText}>
                             📅 {task.dueDate.toLocaleDateString("th-TH")}
                           </span>
                         )}
@@ -331,18 +327,18 @@ export default function Home() {
                   )}
                 </div>
 
-                <div className="flex gap-2">
+                <div className={styles.taskActions}>
                   {editingTask !== task.id && (
                     <button
                       onClick={() => startEditTask(task.id, task.text)}
-                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      className={`${styles.iconButton} ${styles.editButton}`}
                     >
                       ✏️
                     </button>
                   )}
                   <button
                     onClick={() => deleteTask(task.id)}
-                    className="text-destructive hover:opacity-70 transition-opacity"
+                    className={`${styles.iconButton} ${styles.deleteButton}`}
                   >
                     🗑️
                   </button>
@@ -352,7 +348,7 @@ export default function Home() {
           ))}
 
           {filteredTasks.length === 0 && (
-            <div className="text-center py-12 text-muted-foreground">
+            <div className={styles.noTasksMessage}>
               {searchTerm ? "ไม่พบงานที่ค้นหา" : "ยังไม่มีงานในหมวดหมู่นี้"}
             </div>
           )}

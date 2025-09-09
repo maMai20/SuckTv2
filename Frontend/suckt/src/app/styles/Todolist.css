@@ -1,399 +1,132 @@
-/* Layout */
-.layout {
-  display: flex;
-  height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f4f8;
+/* src/styles/todolist.css */
+
+/* ---- Theme Variables ---- */
+:root {
+  --background: #f9fafb;
+  --foreground: #111827;
+
+  --card: #ffffff;
+  --card-foreground: #111827;
+
+  --sidebar: #f3f4f6;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #2563eb;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-accent: #6b7280;
+
+  --input: #ffffff;
+  --border: #d1d5db;
+
+  --ring: #2563eb;
+
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+
+  --muted: #e5e7eb;
+  --muted-foreground: #6b7280;
+
+  --destructive: #dc2626;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 240px;
-  background: #1f2937;
-  color: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid #334155;
+/* ---- Base Layout ---- */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Inter", "Prompt", sans-serif;
 }
 
-.sidebar h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
+/* ---- Sidebar ---- */
+.bg-sidebar {
+  background-color: var(--sidebar);
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.text-sidebar-foreground {
+  color: var(--sidebar-foreground);
 }
 
-.sidebar li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+.bg-sidebar-primary {
+  background-color: var(--sidebar-primary);
+  color: var(--sidebar-primary-foreground);
 }
 
-.sidebar li:hover {
-  background: #374151;
+.border-sidebar-border {
+  border-color: var(--sidebar-border);
 }
 
-.sidebar li.active {
-  background: #0ea5e9;
-  color: white;
-  font-weight: bold;
+.text-sidebar-accent {
+  color: var(--sidebar-accent);
 }
 
-.delete-cat {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #f87171;
-  font-size: 16px;
+/* ---- Card ---- */
+.bg-card {
+  background-color: var(--card);
 }
 
-.delete-cat:hover {
-  transform: scale(1.2);
+.text-card-foreground {
+  color: var(--card-foreground);
 }
 
-/* Add Category */
-.add-category {
-  display: flex;
-  gap: 5px;
+/* ---- Input ---- */
+.bg-input {
+  background-color: var(--input);
 }
 
-.add-category input {
-  flex: 1;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+.border-border {
+  border-color: var(--border);
+}
+
+/* ---- Ring ---- */
+.focus\:ring-ring:focus {
+  --tw-ring-color: var(--ring);
+}
+
+/* ---- Primary ---- */
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary-foreground {
+  color: var(--primary-foreground);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+/* ---- Muted ---- */
+.bg-muted {
+  background-color: var(--muted);
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+/* ---- Destructive ---- */
+.text-destructive {
+  color: var(--destructive);
+}
+
+/* ---- Animations ---- */
+button,
+input,
+select {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+input:focus,
+select:focus {
   outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
 }
 
-.add-category button {
-  padding: 6px 10px;
-  border: none;
-  background: #0ea5e9;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.add-category button:hover {
-  background: #0369a1;
-}
-
-/* Content */
-.content {
-  flex: 1;
-  padding: 30px;
-  overflow-y: auto;
-}
-
-h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #111827;
-}
-
-.input-area {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.input-row {
-  display: flex;
-  gap: 10px;
-}
-
-.input-row input[type="text"] {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  outline: none;
-  transition: 0.3s;
-}
-
-.priority-select,
-.date-input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  outline: none;
-  background: white;
-  cursor: pointer;
-}
-
-.description-input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  font-size: 14px;
-  color: #666;
-}
-
-.controls {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.search-input {
-  flex: 1;
-  min-width: 200px;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-}
-
-.filter-controls {
-  display: flex;
-  gap: 10px;
-}
-
-.filter-controls select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  background: white;
-  cursor: pointer;
-}
-
-/* Task List */
-.task-list {
-  list-style: none;
-  padding: 0;
-}
-
-.task-list li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #ffffff;
-  margin-bottom: 12px;
-  padding: 12px 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s;
-  opacity: 1;
-}
-
-.task-content {
-  flex: 1;
-}
-
-.task-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.task-text {
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.task-text:hover {
-  color: #0ea5e9;
-}
-
-.task-description {
-  font-size: 12px;
-  color: #666;
-  font-style: italic;
-}
-
-.task-meta {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-top: 4px;
-}
-
-.priority-badge {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: white;
-  font-weight: bold;
-}
-
-.due-date {
-  font-size: 11px;
-  color: #666;
-}
-
-.task-actions {
-  display: flex;
-  gap: 5px;
-}
-
-.task-list button.delete {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #f87171;
-  transition: transform 0.3s, color 0.3s;
-}
-
-.task-list button.delete:hover {
-  transform: scale(1.3);
-  color: #dc2626;
-}
-
-.task-list button.edit {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  color: #0ea5e9;
-  transition: transform 0.3s;
-}
-
-.task-list button.edit:hover {
-  transform: scale(1.2);
-}
-
-.task-list li.overdue {
-  border-left: 4px solid #ef4444;
-  background: #fef2f2;
-}
-
-.task-list li.today {
-  border-left: 4px solid #f59e0b;
-  background: #fffbeb;
-}
-
-.task-list li.soon {
-  border-left: 4px solid #0ea5e9;
-  background: #f0f9ff;
-}
-
-/* Edit mode styles */
-.edit-mode {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  width: 100%;
-}
-
-.edit-mode input {
-  flex: 1;
-  padding: 6px 8px;
-  border: 1px solid #0ea5e9;
-  border-radius: 4px;
-  outline: none;
-}
-
-.edit-mode button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* Statistics styles */
-.stats {
-  margin-top: 20px;
-  padding: 15px;
-  background: #374151;
-  border-radius: 8px;
-}
-
-.stats h3 {
-  margin: 0 0 10px 0;
-  font-size: 14px;
-  color: #d1d5db;
-}
-
-.stat-item {
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: #d1d5db;
-}
-
-.stat-item.overdue {
-  color: #fca5a5;
-  font-weight: bold;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 6px;
-  background: #4b5563;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 8px;
-}
-
-.progress-fill {
-  height: 100%;
-  background: #0ea5e9;
-  transition: width 0.3s ease;
-}
-
-/* Empty state styles */
-.empty-state {
-  text-align: center;
-  color: #666;
-  font-style: italic;
-  padding: 40px 20px;
-  background: #f9fafb;
-  border-radius: 8px;
-  border: 2px dashed #d1d5db;
-}
-
-/* Responsive improvements */
-@media (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .sidebar {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .content {
-    padding: 20px;
-  }
-
-  .controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .filter-controls {
-    justify-content: space-between;
-  }
-
-  .input-row {
-    flex-direction: column;
-  }
-
-  .task-meta {
-    flex-wrap: wrap;
-  }
+.task-fade-out {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
