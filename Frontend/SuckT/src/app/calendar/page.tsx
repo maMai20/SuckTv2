@@ -28,7 +28,12 @@ function fmtTime(d: Date) {
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 function fmtDate(d: Date) {
-  return d.toLocaleDateString([], { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+  return d.toLocaleDateString([], {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
 }
 
 // ---------- Mini Month Calendar ----------
@@ -68,16 +73,20 @@ const MiniMonth: React.FC<{
       <div className={styles.miniMonthHeader}>
         <button
           className={styles.navBtn}
-          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}
+          onClick={() =>
+            setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))
+          }
         >
-          ◀
+          ⬅
         </button>
         <div className={styles.monthLabel}>{month} {year}</div>
         <button
           className={styles.navBtn}
-          onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}
+          onClick={() =>
+            setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))
+          }
         >
-          ▶
+          ➡
         </button>
       </div>
       <div className={styles.weekDays}>
@@ -125,7 +134,7 @@ export default function CalendarDashboard() {
   }, [events, selectedDate]);
 
   const onSelect = (selectInfo: DateSelectArg) => {
-    const title = prompt('ชื่อกิจกรรม (Event title)?');
+    const title = prompt('ชื่อกิจกรรมใหม่ ✨');
     selectInfo.view.calendar.unselect();
 
     if (title) {
@@ -150,7 +159,9 @@ export default function CalendarDashboard() {
   };
 
   const toggleComplete = (id: string) => {
-    setEvents(prev => prev.map(e => (e.id === id ? { ...e, completed: !e.completed } : e)));
+    setEvents(prev =>
+      prev.map(e => (e.id === id ? { ...e, completed: !e.completed } : e))
+    );
   };
 
   const fullCalEvents = useMemo(() => {
@@ -174,7 +185,7 @@ export default function CalendarDashboard() {
             <div className={styles.dayDate}>{fmtDate(selectedDate)}</div>
           </div>
           {dayEvents.length === 0 ? (
-            <div className={styles.noEvents}>ยังไม่มีกิจกรรมในวันนี้</div>
+            <div className={styles.noEvents}>ยังไม่มีกิจกรรม 💡</div>
           ) : (
             <ul className={styles.eventList}>
               {dayEvents

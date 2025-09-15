@@ -1,106 +1,138 @@
+/* ================= Container ================= */
 .container {
   display: flex;
   height: 100vh;
-  background: #fff;
-  color: #202124;
-  font-family: 'Roboto', sans-serif;
+  background: #fcfcfd; /* very light lilac */
+  color: #333;
+  font-family: 'Nunito', 'Roboto', sans-serif;
 }
 
+/* ================= Left Panel ================= */
 .leftPane {
-  width: 300px;
-  border-right: 1px solid #dadce0;
+  width: 320px;
+  border-right: 2px dashed #e0dff5; /* soft pastel purple */
   display: flex;
   flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
+  background: #faf8ff; /* soft lilac */
+  border-radius: 0 25px 25px 0;
 }
 
+/* ================= Right Panel ================= */
 .rightPane {
   flex: 1;
-  padding: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #fefefe, #f7f9ff);
+  border-radius: 0 0 0 0;
 }
 
-/* Mini Calendar */
+/* ================= Mini Calendar ================= */
 .miniMonth {
-  border: 1px solid #dadce0;
-  border-radius: 8px;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  background: #fff;
+  border: 2px solid #d7d0ff; /* pastel purple border */
+  border-radius: 18px;
+  padding: 0.75rem;
+  margin-bottom: 1.2rem;
+  background: #ffffff;
+  box-shadow: 2px 3px 8px rgba(180, 180, 210, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.miniMonth:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 10px rgba(170, 170, 200, 0.25);
 }
 .miniMonthHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: .5rem;
+  margin-bottom: 0.6rem;
 }
 .navBtn {
   border: none;
-  background: none;
+  background: #e4e0ff; /* pastel button */
+  color: #5e4db2; /* deep pastel purple */
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 14px;
-  color: #5f6368;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.25s;
+}
+.navBtn:hover {
+  background: #c7bfff;
+  color: #3a2780;
 }
 .monthLabel {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
 }
 .weekDays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  font-size: 11px;
-  color: #5f6368;
-  margin-bottom: 2px;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 4px;
   text-align: center;
+  font-weight: 600;
 }
 .datesGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 4px;
 }
 .dateCell {
   aspect-ratio: 1 / 1;
-  font-size: 12px;
-  border-radius: 4px;
+  font-size: 13px;
+  border-radius: 50%;
   border: none;
   cursor: pointer;
+  transition: all 0.2s;
+  background: #f9f8ff;
 }
 .dateCell:hover {
-  background: #f1f3f4;
+  background: #ffd1dc; /* soft pink pastel */
+  color: #333;
 }
 .inMonth {
-  color: #202124;
+  color: #333;
 }
 .outMonth {
-  color: #9aa0a6;
+  color: #bbb;
 }
 .activeDate {
-  background: #1a73e8;
+  background: #7ad0f3; /* soft blue */
   color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 6px rgba(122, 208, 243, 0.6);
 }
 
-/* Daily Events */
+/* ================= Daily Events ================= */
 .dayEvents {
-  border: 1px solid #dadce0;
-  border-radius: 8px;
-  padding: 0.75rem;
-  background: #fff;
+  border: 2px solid #d7d0ff;
+  border-radius: 18px;
+  padding: 0.8rem 1rem;
+  background: #ffffff;
+  box-shadow: 2px 3px 8px rgba(200, 200, 230, 0.2);
 }
 .dayHeader {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 .dayTitle {
-  font-size: 11px;
+  font-size: 13px;
   text-transform: uppercase;
-  color: #5f6368;
+  color: #7a75a6;
+  letter-spacing: 0.5px;
 }
 .dayDate {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
 }
 .noEvents {
   font-size: 13px;
-  color: #5f6368;
+  color: #999;
+  font-style: italic;
 }
 .eventList {
   list-style: none;
@@ -111,15 +143,56 @@
   font-size: 13px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 12px;
+  transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.eventItem:hover {
+  background: #fce4ff; /* soft lavender */
+  transform: translateX(2px);
+}
+.eventItem input[type="checkbox"] {
+  accent-color: #a283f0; /* pastel checkbox */
+  cursor: pointer;
 }
 .eventDone {
   text-decoration: line-through;
-  color: #9aa0a6;
+  color: #bbb;
 }
 
-/* Completed Event in Calendar */
+/* ================= Completed Event in Calendar ================= */
 .completedEvent {
   opacity: 0.6;
   text-decoration: line-through;
+}
+
+/* ================= FullCalendar Overrides ================= */
+.fc-toolbar-title {
+  color: #5e4db2;
+  font-weight: 700;
+}
+.fc-button {
+  background-color: #e4e0ff;
+  color: #5e4db2;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.fc-button:hover {
+  background-color: #c7bfff;
+  color: #3a2780;
+}
+.fc-daygrid-event {
+  border-radius: 12px !important;
+  background-color: #ffd1dc !important; /* pastel pink event */
+  color: #333 !important;
+  font-weight: 500;
+}
+.fc-event-completed {
+  opacity: 0.6 !important;
+  text-decoration: line-through !important;
 }

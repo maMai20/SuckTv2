@@ -136,7 +136,7 @@ export default function TimerPage() {
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const tracks = ['/music/focus1.mp3', '/music/focus2.mp3', '/music/focus3.mp3'];
+  const tracks = ['lofi-chill.mp3', 'lofi-study-calm.mp3', '/music/focus3.mp3'];
 
   const togglePlay = () => {
     if (!audioRef.current) return;

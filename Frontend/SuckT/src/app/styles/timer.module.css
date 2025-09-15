@@ -1,52 +1,62 @@
-/* Layout */
+/* ===== Layout ===== */
 .container {
   display: flex;
   height: 100vh;
-  background: black;
-  color: #ffffff;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  color: #333;
   overflow: hidden;
+  font-family: "Poppins", "Noto Sans Thai", sans-serif;
 }
 
 .left {
-  width: 380px;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
+  width: 360px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+  border-right: 2px dashed #e2e8f0;
   overflow-y: auto;
+  border-radius: 0 16px 16px 0;
 }
 
 .hideLeft .left {
   display: none;
 }
 
-/* Titles */
+/* ===== Titles ===== */
 .title {
-  font-size: 1.5rem;
-  padding: 100px;
+  font-size: 1.6rem;
+  padding: 2rem 0;
   font-weight: bold;
   text-align: center;
+  color: #475569;
 }
 
 .subtitle {
   text-align: center;
   color: #94a3b8;
   margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
 .sectionTitle {
   font-size: 1.2rem;
   text-align: center;
-  padding: 15px;
+  padding: 12px;
   margin-bottom: 1rem;
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #475569;
+  font-weight: 500;
 }
 
-/* Pet Container */
+/* ===== Pet Container ===== */
 .petContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(160deg, #fff, #f9fafb 60%);
 }
 
 .fullscreen {
@@ -54,23 +64,24 @@
   width: 100%;
 }
 
-/* 🐱 Cat Design */
+/* 🐱 Cute Cat Design */
 .cat {
-  width: 120px;
-  height: 120px;
-  background: #f1f5f9;
+  width: 130px;
+  height: 130px;
+  background: #fff0f6;
   border-radius: 50%;
   position: relative;
   transition: transform 0.3s ease-in-out;
+  box-shadow: 0 8px 16px rgba(255, 182, 193, 0.25);
 }
 
 .catEars {
   position: absolute;
   top: -20px;
-  left: 10px;
-  width: 30px;
-  height: 30px;
-  background: #ffffff;
+  left: 12px;
+  width: 28px;
+  height: 28px;
+  background: #ffe4ec;
   border-radius: 50% 50% 0 0;
   transform: rotate(-20deg);
 }
@@ -78,10 +89,10 @@
 .catEars::after {
   content: '';
   position: absolute;
-  right: -40px;
-  width: 30px;
-  height: 30px;
-  background: #f1f5f9;
+  right: -38px;
+  width: 28px;
+  height: 28px;
+  background: #ffe4ec;
   border-radius: 50% 50% 0 0;
   transform: rotate(20deg);
 }
@@ -89,49 +100,49 @@
 .catFace {
   position: absolute;
   top: 40px;
-  left: 20px;
-  width: 80px;
-  height: 60px;
-  background: #f1f5f9;
+  left: 22px;
+  width: 85px;
+  height: 65px;
+  background: #fff0f6;
   border-radius: 40px;
 }
 
 .catEyes {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 10px;
-  height: 10px;
-  background: #000;
+  top: 18px;
+  left: 18px;
+  width: 12px;
+  height: 12px;
+  background: #333;
   border-radius: 50%;
-  box-shadow: 40px 0 #000;
+  box-shadow: 42px 0 #333;
   animation: blink 4s infinite;
 }
 
 @keyframes blink {
   0%, 90%, 100% { transform: scaleY(1); }
-  95% { transform: scaleY(0.1); }
+  95% { transform: scaleY(0.2); }
 }
 
 .catMouth {
   position: absolute;
   bottom: 10px;
-  left: 35px;
-  width: 10px;
-  height: 10px;
-  border: 2px solid #000;
+  left: 37px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #333;
   border-top: none;
   border-radius: 0 0 50% 50%;
 }
 
 .catTail {
   position: absolute;
-  right: -20px;
-  bottom: 20px;
-  width: 40px;
-  height: 10px;
-  background: #f1f5f9;
-  border-radius: 10px;
+  right: -24px;
+  bottom: 22px;
+  width: 45px;
+  height: 12px;
+  background: #ffe4ec;
+  border-radius: 12px;
   transform: rotate(20deg);
   animation: tailMove 2s infinite ease-in-out;
 }
@@ -141,13 +152,15 @@
   50% { transform: rotate(-10deg); }
 }
 
-/* Timer */
+/* ===== Timer ===== */
 .timeText {
-  font-size: 2rem;
-  margin: 2.5rem 0;
+  font-size: 2.2rem;
+  margin: 2rem 0;
+  color: #475569;
+  font-weight: bold;
 }
 
-/* Buttons */
+/* ===== Buttons ===== */
 .buttonRow {
   display: flex;
   gap: 1rem;
@@ -155,69 +168,94 @@
 }
 
 .mainBtn {
-  padding: 0rem 1rem;
-  background: #a39f9f;
+  padding: 0.6rem 1.2rem;
+  background: #fda4af;
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(253, 164, 175, 0.3);
+  transition: transform 0.2s;
+}
+.mainBtn:hover {
+  transform: scale(1.05);
+  background: #fb7185;
 }
 
 .secondaryBtn {
-  padding: 0.5rem 1rem;
-  background: #475569;
+  padding: 0.6rem 1.2rem;
+  background: #93c5fd;
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(147, 197, 253, 0.3);
+  transition: transform 0.2s;
+}
+.secondaryBtn:hover {
+  transform: scale(1.05);
+  background: #60a5fa;
 }
 
-/* Theme Dots */
+/* ===== Theme Dots ===== */
 .themeDots {
   margin-top: 1rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  justify-content: center;
 }
 
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid rgb(0, 0, 0);
-  opacity: 0.6;
+  border: 2px solid #e2e8f0;
+  opacity: 0.7;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.dot:hover {
+  transform: scale(1.2);
+  opacity: 1;
 }
 
 .active {
   opacity: 1;
+  border-color: #475569;
 }
 
-.theme0 { background: #ffb9f6; }
-.theme1 { background: #8aacfd; }
-.theme2 { background: #a7f3d0; }
+.theme0 { background: #f9a8d4; }
+.theme1 { background: #93c5fd; }
+.theme2 { background: #86efac; }
 .theme3 { background: #fca5a5; }
 
-/* Custom Timer */
+/* ===== Custom Timer ===== */
 .customTimer {
   padding: 1rem;
   margin: 2rem 0;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(148, 163, 184, 0.2);
 }
 
 .customTimerHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .deleteBtn {
   background: transparent;
-  color: #ca0000;
+  color: #ef4444;
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
 }
 
-/* Music Player */
+/* ===== Music Player ===== */
 .musicControl {
   display: flex;
   gap: 1rem;
@@ -228,4 +266,6 @@
 .volumeControl {
   margin-top: 0.5rem;
   text-align: center;
+  font-size: 0.9rem;
+  color: #475569;
 }

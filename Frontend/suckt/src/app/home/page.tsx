@@ -23,6 +23,9 @@ const songs = [
   { src: '/lofi-background-music.mp3', title: 'Lofi Background' },
   { src: '/lofi-chill.mp3', title: 'Lofi Chill' },
   { src: '/lofi-lofi-song.mp3', title: 'Lofi Lofi' },
+  { src: '/lofi-study-calm.mp3', title: 'study-calm' },
+  { src: '/lofi-lofi-song.mp3', title: 'Lofi Lofi' },
+  { src: '/lofi-lofi-song.mp3', title: 'Lofi Lofi' },
 ];
 
 const gifs = [
