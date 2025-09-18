@@ -1,8 +1,9 @@
+/* calendar.module.css */
 /* ================= Container ================= */
 .container {
   display: flex;
   height: 100vh;
-  background: #fcfcfd; /* very light lilac */
+  background: #fcfcfd;
   color: #333;
   font-family: 'Nunito', 'Roboto', sans-serif;
 }
@@ -10,12 +11,12 @@
 /* ================= Left Panel ================= */
 .leftPane {
   width: 320px;
-  border-right: 2px dashed #e0dff5; /* soft pastel purple */
+  border-right: 2px dashed #e0dff5;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
-  background: #faf8ff; /* soft lilac */
+  background: #faf8ff;
   border-radius: 0 25px 25px 0;
 }
 
@@ -24,12 +25,11 @@
   flex: 1;
   padding: 1rem;
   background: linear-gradient(135deg, #fefefe, #f7f9ff);
-  border-radius: 0 0 0 0;
 }
 
 /* ================= Mini Calendar ================= */
 .miniMonth {
-  border: 2px solid #d7d0ff; /* pastel purple border */
+  border: 2px solid #d7d0ff;
   border-radius: 18px;
   padding: 0.75rem;
   margin-bottom: 1.2rem;
@@ -49,8 +49,8 @@
 }
 .navBtn {
   border: none;
-  background: #e4e0ff; /* pastel button */
-  color: #5e4db2; /* deep pastel purple */
+  background: #e4e0ff;
+  color: #5e4db2;
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
@@ -91,7 +91,7 @@
   background: #f9f8ff;
 }
 .dateCell:hover {
-  background: #ffd1dc; /* soft pink pastel */
+  background: #ffd1dc;
   color: #333;
 }
 .inMonth {
@@ -101,7 +101,7 @@
   color: #bbb;
 }
 .activeDate {
-  background: #7ad0f3; /* soft blue */
+  background: #7ad0f3;
   color: #fff;
   font-weight: 700;
   box-shadow: 0 0 6px rgba(122, 208, 243, 0.6);
@@ -150,11 +150,11 @@
   cursor: pointer;
 }
 .eventItem:hover {
-  background: #fce4ff; /* soft lavender */
+  background: #fce4ff;
   transform: translateX(2px);
 }
 .eventItem input[type="checkbox"] {
-  accent-color: #a283f0; /* pastel checkbox */
+  accent-color: #a283f0;
   cursor: pointer;
 }
 .eventDone {
@@ -162,37 +162,75 @@
   color: #bbb;
 }
 
-/* ================= Completed Event in Calendar ================= */
-.completedEvent {
-  opacity: 0.6;
-  text-decoration: line-through;
+/* ================= FullCalendar Overrides ================= */
+.fullCalendar {
+  border: 2px solid #d7d0ff;
+  border-radius: 18px;
+  padding: 0.5rem;
+  background: #ffffff;
+  box-shadow: 2px 3px 8px rgba(200, 200, 230, 0.2);
 }
 
-/* ================= FullCalendar Overrides ================= */
+.fc-toolbar {
+  margin-bottom: 1rem !important;
+}
 .fc-toolbar-title {
-  color: #5e4db2;
-  font-weight: 700;
+  color: #5e4db2 !important;
+  font-weight: 700 !important;
 }
 .fc-button {
-  background-color: #e4e0ff;
-  color: #5e4db2;
-  border: none;
-  border-radius: 8px;
-  padding: 4px 10px;
-  font-weight: 600;
-  transition: all 0.2s;
+  background-color: #e4e0ff !important;
+  color: #5e4db2 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 4px 10px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s !important;
 }
 .fc-button:hover {
-  background-color: #c7bfff;
-  color: #3a2780;
+  background-color: #c7bfff !important;
+  color: #3a2780 !important;
 }
-.fc-daygrid-event {
+.fc-daygrid-event,
+.fc-timegrid-event {
   border-radius: 12px !important;
-  background-color: #ffd1dc !important; /* pastel pink event */
+  background-color: #ffd1dc !important;
   color: #333 !important;
-  font-weight: 500;
+  font-weight: 500 !important;
+  border: none !important;
 }
-.fc-event-completed {
+.fc-daygrid-day-number {
+  color: #5e4db2 !important;
+  font-weight: 600 !important;
+}
+.fc-col-header-cell {
+  background: #faf8ff !important;
+  color: #5e4db2 !important;
+  font-weight: 600 !important;
+}
+.fc-timegrid-slot-label {
+  color: #7a75a6 !important;
+}
+.completedEvent,
+.fcEventCompleted {
   opacity: 0.6 !important;
   text-decoration: line-through !important;
+  background-color: #e4e0ff !important;
+  color: #777 !important;
+}
+
+/* ================= Scrollbar ================= */
+.fc-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #c7bfff #fdfdff;
+}
+.fc-scroller::-webkit-scrollbar {
+  width: 8px;
+}
+.fc-scroller::-webkit-scrollbar-track {
+  background: #fdfdff;
+}
+.fc-scroller::-webkit-scrollbar-thumb {
+  background: #c7bfff;
+  border-radius: 10px;
 }

@@ -1,10 +1,12 @@
+// CalendarDashboard.tsx
 'use client';
+
 import React, { useMemo, useRef, useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { DateSelectArg, EventClickArg } from '@fullcalendar/core';
+import type { DateSelectArg, EventClickArg } from '@fullcalendar/core'; // <-- ถูกต้อง: types มาจาก core
 import styles from '../styles/calendar.module.css';
 
 // ---------- Types ----------
@@ -135,11 +137,14 @@ export default function CalendarDashboard() {
 
   const onSelect = (selectInfo: DateSelectArg) => {
     const title = prompt('ชื่อกิจกรรมใหม่ ✨');
+    // unselect the selection on the calendar
     selectInfo.view.calendar.unselect();
 
     if (title) {
       const newEvent: CalEvent = {
-        id: crypto.randomUUID(),
+        id: typeof crypto !== 'undefined' && (crypto as any).randomUUID
+             ? (crypto as any).randomUUID()
+             : Date.now().toString(),
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr || undefined,

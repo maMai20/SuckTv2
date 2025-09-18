@@ -127,24 +127,6 @@ const ProfileMenu = ({
         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         <Divider />
-        <MenuItem
-          onClick={() => {
-            onToggleTheme();
-            handleMenuClose();
-          }}
-        >
-          {currentMode === 'dark' ? (
-            <>
-              <LightIcon fontSize="small" style={{ marginRight: 8 }} />
-              Light Mode
-            </>
-          ) : (
-            <>
-              <DarkIcon fontSize="small" style={{ marginRight: 8 }} />
-              Dark Mode
-            </>
-          )}
-        </MenuItem>
         <MenuItem onClick={handleMenuClose}>Login</MenuItem>
       </Menu>
     </>
