@@ -1,11 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
 
 body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Kanit', sans-serif;
-  background-color: #000;
+
   overflow-y: hidden;
 }
 
@@ -46,8 +42,8 @@ body, html {
   display: flex;
   gap: 20px;
   background: rgba(0, 0, 0, 0.45);
-  padding: 10px 25px;
-  border-radius: 50px;
+  padding: 1px 25px;
+  border-radius: 100px;
   align-items: center;
   justify-content: center;
   z-index: 2;
@@ -97,10 +93,6 @@ body, html {
 }
 
 .featureBlock {
-  flex: 1 1 22%;
-  min-width: 250px;
-  max-width: 600px;
-  height: 100px;
   background-color: #222;
   color: white;
   border: none;
@@ -120,14 +112,10 @@ body, html {
 }
 
 .bottomButtons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  width: 500vw;
-  height: 250px; /* ความสูงของบล็อกฟีเจอร์ */
+  height: 230px; /* ความสูงของบล็อกฟีเจอร์ */
+  width: 90%;
   padding: 0 2px ;
-  margin: 30px;
+  margin: 25px;
   gap: 50px;
 }
 
