@@ -1,50 +1,103 @@
-# SuckT — Productivity Workspace
+<div align="center">
 
-A frontend productivity workspace built with React, TypeScript, and Next.js. The project brings several everyday tools into one interface so users can plan tasks, manage time, and stay focused.
+# ✨ SuckT
 
-## What it includes
+### A calm productivity workspace for planning, focusing, and getting things done.
 
-- To-do list for organizing daily tasks
-- Calendar views for planning events
-- Focus timer for Pomodoro-style sessions
-- GIF and ambient-media experiments
-- Login and registration screens
-- Reusable UI components and theme-aware styling
+<p>
+  <a href="https://github.com/maMai20/SuckTv2">
+    <img src="https://img.shields.io/badge/Project-Portfolio--ready-7C3AED?style=for-the-badge" alt="Portfolio project">
+  </a>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=111827" alt="React 19">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Next.js-App%20Router-111827?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+</p>
 
-## Tech stack
+<p>
+  A frontend project that brings everyday productivity tools into one simple interface.
+</p>
 
-- React 19
-- TypeScript
-- Next.js
-- FullCalendar
-- Axios
-- Day.js
-- CSS Modules
+</div>
 
-## Repository structure
+---
 
-This repository contains multiple frontend experiments and app iterations. The main concepts are grouped under the `Frontend/` and `SuckTv2/` directories.
+## 🌿 What is SuckT?
 
-Each app directory has its own `package.json`. Open the directory for the feature you want to run, install dependencies, and start the local development server from there.
+SuckT is a multi-feature productivity workspace built to help users organize tasks, plan time, and stay focused. It is also a hands-on frontend project focused on reusable React components, interactive UI, and practical product flows.
+
+> **Project focus:** turning small, useful tools into one consistent and approachable experience.
+
+## 🧩 Features
+
+| Module | What it demonstrates |
+| --- | --- |
+| ✅ To-do list | Create and organize daily tasks |
+| 🗓️ Calendar | Plan events with interactive calendar views |
+| ⏱️ Focus timer | Support Pomodoro-style focus sessions |
+| 🔐 Authentication UI | Login and registration screen flows |
+| 🎞️ Ambient media | GIF and background-audio experiments |
+| 🎨 UI system | Reusable components, CSS Modules, and theme-aware styling |
+
+## 🔄 Product flow
+
+```mermaid
+flowchart LR
+    A[Plan tasks] --> B[Schedule time]
+    B --> C[Start focus session]
+    C --> D[Review progress]
+    D --> A
+```
+
+## 🛠️ Built with
+
+<p>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=111827" alt="React">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Next.js-App%20Router-111827?logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/FullCalendar-Interactive%20calendar-3788D8" alt="FullCalendar">
+  <img src="https://img.shields.io/badge/Axios-HTTP%20client-5A29E4?logo=axios&logoColor=white" alt="Axios">
+  <img src="https://img.shields.io/badge/Day.js-Date%20utilities-FF5F56" alt="Day.js">
+  <img src="https://img.shields.io/badge/CSS%20Modules-Component%20styles-1572B6?logo=css3&logoColor=white" alt="CSS Modules">
+</p>
+
+## 📁 Repository structure
+
+This repository contains several frontend experiments and app iterations, primarily grouped under:
+
+- `Frontend/`
+- `SuckTv2/`
+
+Each app directory has its own `package.json`. Open the app you want to run, then start the development server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Why I built it
+## 🎯 What I learned
 
-I wanted to practice building a multi-feature interface from reusable React components while working through common product concerns such as navigation, responsive layouts, date/time interactions, and stateful UI.
+- Designing a multi-feature frontend around a consistent user flow
+- Building interactive date and time experiences
+- Structuring reusable React components
+- Managing styling across multiple UI modules
+- Thinking about accessibility, responsiveness, and maintainability
 
-## Current status
+## 🗺️ Roadmap
 
-This is an active learning project. The next improvements planned are:
+- [ ] Consolidate duplicated app iterations
+- [ ] Add automated tests and linting
+- [ ] Improve accessibility and responsive behavior
+- [ ] Document API/data flow
+- [ ] Add a polished live demo
 
-- Consolidate duplicated app iterations into a clearer structure
-- Add automated tests and linting
-- Improve accessibility and responsive behavior
-- Document the API/data flow and deployment steps
+## 👋 About the author
 
-## Author
+Built by **Kimmy** — a frontend developer learning by turning practical ideas into usable interfaces.
 
-Kimmy — [@maMai20](https://github.com/maMai20)
+[![GitHub](https://img.shields.io/badge/GitHub-@maMai20-181717?style=flat-square&logo=github)](https://github.com/maMai20)
+
+<div align="center">
+
+### Thanks for visiting ⭐
+
+</div>
